@@ -19,7 +19,9 @@
             <div id="data-table_processing" class="dataTables_processing panel panel-default"
                  style="display: none;">{{trans('lang.processing')}}</div>
             <div class="text-right print-btn">
-                <button type="button" class="fa fa-print" onclick="PrintElem('order_detail')"></button>
+                <a href="{{route('vendors.orderprint',$id)}}">
+          			<button type="button" class="fa fa-print"></button>
+          		</a>
             </div>
 
             <div class="order_detail" id="order_detail">
@@ -104,7 +106,11 @@
                             <h3>{{ trans('lang.billing_details')}}</h3>
 
                             <div class="address order_detail-top-box">
+                            <p>
+                                <strong>{{trans('lang.name')}}: </strong><span id="billing_name"></span>
+                            </p>
                                 <p>
+                                <strong>{{trans('lang.address')}}: </strong>
                                     <span id="billing_name"></span><br>
                                     <span id="billing_line1"></span><br>
                                     <span id="billing_line2"></span><br>
@@ -123,8 +129,8 @@
                             <h3>{{ trans('lang.driver_detail')}}</h3>
 
                             <div class="address order_detail-top-box">
-                                <p>
-                                    <span id="driver_firstName"></span> <span id="driver_lastName"></span><br>
+                            <p>
+                                <strong>{{trans('lang.name')}}: </strong><span id="driver_firstName"></span> <span id="driver_lastName"></span><br>
                                 </p>
                                 <p><strong>{{trans('lang.email_address')}}:</strong>
                                     <span id="driver_email"></span>
@@ -272,6 +278,18 @@
 
                     </div>
                 </div>
+                <div class="order_detail-review mt-4">
+                              <div class="row">
+                                <div class="rental-review col-md-12">
+                                  <div class="review-inner">
+                                    <h3>{{trans("lang.customer_reviews")}}</h3>
+                                    <div id="customers_rating_and_review">
+
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
 
             </div>
 
@@ -332,11 +350,19 @@
             var orderPaytableAmount = 0;
             var orderTakeAwayOption = false;
             var manfcmTokenVendor='';
+            var reviewAttributes = {};
+            var page_size = 5;
             var manname='';
+            var decimal_degits = 0;
+
             refCurrency.get().then(async function (snapshots) {
                 var currencyData = snapshots.docs[0].data();
                 currentCurrency = currencyData.symbol;
                 currencyAtRight = currencyData.symbolAtRight;
+
+                if (currencyData.decimal_degits) {
+                decimal_degits = currencyData.decimal_degits;
+            }
             });
 
 
@@ -368,7 +394,7 @@
 
                 ref.get().then(async function (snapshots) {
                     var order = snapshots.docs[0].data();
-
+                    getUserReview(order);
                     append_procucts_list = document.getElementById('order_products');
                     append_procucts_list.innerHTML = '';
 
@@ -376,7 +402,11 @@
                     append_procucts_total.innerHTML = '';
 
 
-                    $("#billing_name").text(order.address.name);
+                    if(order.address.name){	
+					    $("#billing_name").text(order.address.name);
+					}else{
+				   		$("#billing_name").text(order.author.firstName+' '+order.author.lastName);
+				    }
                     var billingAddressstring = '';
 
                     $("#trackng_number").text(id);
@@ -557,6 +587,13 @@
                 })
 
                 $(".save_order_btn").click(async function() {
+
+                    // var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE', 0); ?>";
+                    //     if(is_disable_delete == 1){
+                    //         alert("Do not alllow to change in demo content !");
+                    //         return false;
+                    //     }
+
                     var clientName = $(".client_name").val();
                     var orderStatus = $("#order_status").val();
                     if (old_order_status != orderStatus) {
@@ -760,6 +797,16 @@
                         html = html + '<img class="img-circle img-size-32 mr-2" style="width:60px;height:60px;" src="' + place_image + '" alt="image">';
                     }
                     html = html + '</div><div class="orders-tracking"><h6>' + val.name + '</h6><div class="orders-tracking-item-details">';
+                    if (val.variant_info) {
+                    html = html + '<div class="variant-info">';
+                    html = html + '<ul>';
+                    $.each(val.variant_info.variant_options, function (label, value) {
+                        html = html + '<li class="variant"><span class="label">' + label + '</span><span class="value">' + value + '</span></li>';
+                    });
+                    html = html + '</ul>';
+                    html = html + '</div>';
+                }
+                  
                     if (extra_count > 1 || product.size) {
                         html = html + '<strong>{{trans("lang.extras")}} :</strong>';
                     }
@@ -789,16 +836,16 @@
                     }
                     totalProductPrice = parseFloat(totalProductPrice).toFixed(2);
 
-                    if (currencyAtRight) {
-                        price_val = price_item + "" + currentCurrency;
-                        extras_price_val = extras_price + "" + currentCurrency;
-                        totalProductPrice_val = totalProductPrice + "" + currentCurrency;
-                    } else {
-                        price_val = currentCurrency + "" + price_item;
-                        extras_price_val = currentCurrency + "" + extras_price;
-                        totalProductPrice_val = currentCurrency + "" + totalProductPrice;
-                    }
-
+                    
+                if (currencyAtRight) {
+                    price_val = parseFloat(price_item).toFixed(decimal_degits) + "" + currentCurrency;
+                    extras_price_val = parseFloat(extras_price).toFixed(decimal_degits) + "" + currentCurrency;
+                    totalProductPrice_val = parseFloat(totalProductPrice).toFixed(decimal_degits) + "" + currentCurrency;
+                } else {
+                    price_val = currentCurrency + "" + parseFloat(price_item).toFixed(decimal_degits);
+                    extras_price_val = currentCurrency + "" + parseFloat(extras_price).toFixed(decimal_degits);
+                    totalProductPrice_val = currentCurrency + "" + parseFloat(totalProductPrice).toFixed(decimal_degits);
+                }
                     html = html + '</div></div></td>';
                     html = html + '<td>' + price_val + '</td><td> × ' + val.quantity + '</td><td> + ' + extras_price_val + '</td><td>  ' + totalProductPrice_val + '</td>';
 
@@ -865,7 +912,7 @@
 
                 if (intRegex.test(discount) || floatRegex.test(discount)) {
 
-                    discount = parseFloat(discount).toFixed(2);
+                    discount = parseFloat(discount).toFixed(decimal_degits);
                     total_price -= parseFloat(discount);
 
                     if (currencyAtRight) {
@@ -882,7 +929,7 @@
                 }
 
                 if(specialDiscount != undefined){
-                        special_discount = parseFloat(specialDiscount.special_discount).toFixed(2);
+                        special_discount = parseFloat(specialDiscount.special_discount).toFixed(decimal_degits);
                     total_price -= parseFloat(special_discount);
 
                     if (currencyAtRight) {
@@ -920,9 +967,9 @@
 
              if(!isNaN(tax) && tax!=0){
                 if(currencyAtRight){
-                  html=html+'<tr><td class="label">{{trans("lang.tax")}}</td><td class="tax_amount">+'+tax.toFixed(2)+''+currentCurrency+'('+taxlabel+' '+snapshotsProducts.taxSetting.tax+' '+taxlabeltype+')</td></tr>';
+                  html=html+'<tr><td class="label">{{trans("lang.tax")}}</td><td class="tax_amount">+'+tax.toFixed(decimal_degits)+''+currentCurrency+'('+taxlabel+' '+snapshotsProducts.taxSetting.tax+' '+taxlabeltype+')</td></tr>';
                 }else{
-                  html=html+'<tr><td class="label">{{trans("lang.tax")}}</td><td class="tax_amount">+'+currentCurrency+tax.toFixed(2)+'('+taxlabel+' '+snapshotsProducts.taxSetting.tax +' '+taxlabeltype+')</td></tr>';
+                  html=html+'<tr><td class="label">{{trans("lang.tax")}}</td><td class="tax_amount">+'+currentCurrency+tax.toFixed(decimal_degits)+'('+taxlabel+' '+snapshotsProducts.taxSetting.tax +' '+taxlabeltype+')</td></tr>';
                 }
 
                 total_price = total_price + tax;
@@ -932,7 +979,7 @@
 
                 if (intRegex.test(deliveryCharge) || floatRegex.test(deliveryCharge)) {
 
-                    deliveryCharge = parseFloat(deliveryCharge).toFixed(2);
+                    deliveryCharge = parseFloat(deliveryCharge).toFixed(decimal_degits);
                     total_price += parseFloat(deliveryCharge);
 
                     if (currencyAtRight) {
@@ -952,9 +999,9 @@
                 var total_item_price = total_price;
                 if (intRegex.test(tip_amount) || floatRegex.test(tip_amount)) {
 
-                    tip_amount = parseFloat(tip_amount).toFixed(2);
+                    tip_amount = parseFloat(tip_amount).toFixed(decimal_degits);
                     total_price += parseFloat(tip_amount);
-                    total_price = parseFloat(total_price).toFixed(2);
+                    total_price = parseFloat(total_price).toFixed(decimal_degits);
 
                     if (currencyAtRight) {
                         tip_amount_val = tip_amount + "" + currentCurrency;
@@ -962,18 +1009,18 @@
                         tip_amount_val = currentCurrency + "" + tip_amount;
                     }
                     if (takeAway == '' || takeAway == false) {
-                        tip_amount_val = tip_amount;
+                        tip_amount_val = tip_amount_val;
                         html = html + '<tr><td class="label">{{trans("lang.tip_amount")}}</td><td class="tip_amount_val">+' + tip_amount_val + '</td></tr>';
                     }
                 }
 
                 orderPaytableAmount = total_price;
                 if (currencyAtRight) {
-                    total_price_val = parseFloat(total_price).toFixed(2) + "" + currentCurrency;
+                    total_price_val = parseFloat(total_price).toFixed(decimal_degits) + "" + currentCurrency;
                 } else {
-                    total_price_val = currentCurrency + "" + parseFloat(total_price).toFixed(2);
+                    total_price_val = currentCurrency + "" + parseFloat(total_price).toFixed(decimal_degits);
                 }
-                total_price_val = total_price;
+                total_price_val = total_price_val;
                 html = html + '<tr><td class="label">{{trans("lang.total_amount")}}</td><td class="total_price_val">' + total_price_val + '</td></tr>';
 
                 if (adminCommission != undefined && adminCommissionType != undefined) {
@@ -991,14 +1038,14 @@
 
                 if (adminCommission) {
 
-                    adminCommission = parseFloat(adminCommission).toFixed(2);
+                    adminCommission = parseFloat(adminCommission).toFixed(decimal_degits);
                     if (currencyAtRight) {
                         adminCommission_val = adminCommission + "" + currentCurrency;
                     } else {
                         adminCommission_val = currentCurrency + "" + adminCommission;
                     }
                     adminCommission_val = adminCommission;
-                    html = html + '<tr><td class="label"><small>( {{trans("lang.admin_commission")}} </small></td><td class="adminCommission_val"><small>' + adminCommission_val + ')</small></td></tr>';
+                    /*html = html + '<tr><td class="label"><small>( {{trans("lang.admin_commission")}} </small></td><td class="adminCommission_val"><small>' + adminCommission_val + ')</small></td></tr>';*/
                 }
 
                 if (notes) {
@@ -1069,6 +1116,129 @@
 
 
             }
+
+            //Review code GA
+        var refReviewAttributes = database.collection('review_attributes');
+        refReviewAttributes.get().then(async function (snapshots) {
+            if (snapshots != undefined) {
+                snapshots.forEach((doc) => {
+                    var data = doc.data();
+                    reviewAttributes[data.id] = data.title;
+                });
+            }
+        });
+
+        function getUserReview(vendorOrder, reviewAttr) {
+            var refUserReview = database.collection('foods_review').where('orderid', "==", vendorOrder.id);
+            refUserReview.limit(page_size).get().then(async function (userreviewsnapshot) {
+                var reviewHTML = '';
+                reviewHTML = buildRatingsAndReviewsHTML(vendorOrder, userreviewsnapshot);
+                console.log(reviewHTML);
+                if (userreviewsnapshot.docs.length >0) {
+                    jQuery("#customers_rating_and_review").append(reviewHTML);
+                }
+                else{
+                    jQuery("#customers_rating_and_review").html('<h4>No Reviews Found</h4>');
+                }
+            });
+        }
+
+        function buildRatingsAndReviewsHTML(vendorOrder, userreviewsnapshot) {
+            var allreviewdata = [];
+            var reviewhtml = '';
+            console.log(vendorOrder);
+            userreviewsnapshot.docs.forEach((listval) => {
+                var reviewDatas = listval.data();
+                reviewDatas.id = listval.id;
+                allreviewdata.push(reviewDatas);
+            });
+            //reviewhtml += '<h3>{{trans("lang.customer_reviews")}}</h3>'
+            reviewhtml += '<div class="user-ratings">';
+            allreviewdata.forEach((listval) => {
+                var val = listval;
+                vendorOrder.products.forEach((productval) => {
+                    if (productval.id == val.productId) {
+                        rating = val.rating;
+                        reviewhtml = reviewhtml + '<div class="reviews-members py-3 border mb-3"><div class="media">';
+                        if(productval.photo != ''){
+                        reviewhtml = reviewhtml + '<a href="javascript:void(0);"><img alt="#" src="' + productval.photo + '" class=" img-circle img-size-32 mr-2" style="width:60px;height:60px"></a>';
+                        }else{
+                        reviewhtml = reviewhtml + '<a href="javascript:void(0);"><img alt="#" src="' +place_image+ '" class=" img-circle img-size-32 mr-2" style="width:60px;height:60px"></a>';
+                        }
+                        reviewhtml = reviewhtml + '<div class="media-body d-flex"><div class="reviews-members-header"><h6 class="mb-0"><a class="text-dark" href="javascript:void(0);">' + productval.name + '</a></h6><div class="star-rating"><div class="d-inline-block" style="font-size: 14px;">';
+                        reviewhtml = reviewhtml + ' <ul class="rating" data-rating="' + rating + '">';
+                        reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                        reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                        reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                        reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                        reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                        reviewhtml = reviewhtml + '</ul>';
+                        reviewhtml = reviewhtml + '</div></div>';
+                        reviewhtml = reviewhtml + '</div>';
+                        reviewhtml = reviewhtml + '<div class="review-date ml-auto">';
+                        if (val.createdAt != null && val.createdAt != "") {
+                            var review_date = val.createdAt.toDate().toLocaleDateString('en', {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric"
+                            });
+                            reviewhtml = reviewhtml + '<span>' + review_date + '</span>';
+                        }
+                        reviewhtml = reviewhtml + '</div>';
+                        var photos = '';
+                        if (val.photos.length > 0) {
+                            photos += '<div class="photos"><ul>';
+                            $.each(val.photos, function (key, img) {
+                                photos += '<li><img src="' + img + '" width="100"></li>';
+                            });
+                            photos += '</ul></div>';
+                        }
+                        reviewhtml = reviewhtml + '</div></div><div class="reviews-members-body w-100"><p class="mb-2">' + val.comment + '</p>' + photos + '</div>';
+                        if (val.hasOwnProperty('reviewAttributes') && val.reviewAttributes != null) {
+                            reviewhtml += '<div class="attribute-ratings feature-rating mb-2">';
+                            var label_feature = "{{trans('lang.byfeature')}}";
+                            reviewhtml += '<h3 class="mb-2">' + label_feature + '</h3>';
+                            reviewhtml += '<div class="media-body">';
+                            $.each(val.reviewAttributes, function (aid, data) {
+                                var at_id = aid;
+                                var at_title = reviewAttributes[aid];
+                                var at_value = data;
+                                reviewhtml += '<div class="feature-reviews-members-header d-flex mb-3">';
+                                reviewhtml += '<h6 class="mb-0">' + at_title + '</h6>';
+                                reviewhtml = reviewhtml + '<div class="rating-info ml-auto d-flex">';
+                                reviewhtml = reviewhtml + '<div class="star-rating">';
+                                reviewhtml = reviewhtml + ' <ul class="rating" data-rating="' + at_value + '">';
+                                reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                                reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                                reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                                reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                                reviewhtml = reviewhtml + '<li class="rating__item"></li>';
+                                reviewhtml = reviewhtml + '</ul>';
+                                reviewhtml += '</div>';
+
+                                reviewhtml += '<div class="count-rating ml-2">';
+                                reviewhtml += '<span class="count">' + at_value + '</span>';
+                                reviewhtml += '</div>';
+
+
+                                reviewhtml += '</div></div>';
+                            });
+                            reviewhtml += '</div></div>';
+                        }
+                        reviewhtml += '</div>';
+                    }
+                    reviewhtml += '</div>';
+                });
+
+
+            });
+
+            reviewhtml += '</div>';
+
+            return reviewhtml;
+        }
+
+        //End Review Code
         </script>
 
     @endsection

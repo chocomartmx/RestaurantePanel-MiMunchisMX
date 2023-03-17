@@ -31,7 +31,7 @@
 
 <hr class="non-printable">
 </div>
-<div class="col-6">
+<div class="col-12">
 <div class="text-center pt-4 mb-3">
 <h2 style="line-height: 1"><label class="storeName"></label></h2>
 <h5 style="font-size: 20px;font-weight: lighter;line-height: 1">
@@ -42,7 +42,7 @@
 <label class="storePhone"></label>
 </h5>
 </div>
-<span>----------------------------------------------------------------------------------------------------</span>
+<span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 <div class="row mt-3">
 <div class="col-6">
 <h5>{{trans('lang.order_id')}} : <label class="orderId"></label></h5>
@@ -71,7 +71,7 @@
 </div>
 </div>
 <h5 class="text-uppercase"></h5>
-<span>----------------------------------------------------------------------------------------------------</span>
+<span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 <table class="table table-bordered mt-3" style="width: 92%">
 <thead>
 <tr>
@@ -86,7 +86,7 @@
 
 </tbody>
 </table>
-<span>----------------------------------------------------------------------------------------------------</span>
+<span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 <div class="row justify-content-md-end mb-3" style="width: 97%">
 <div class="col-md-7 col-lg-7">
 <dl class="row text-right">
@@ -135,11 +135,11 @@
 </dl>
 </div>
 </div>
-<span>----------------------------------------------------------------------------------------------------</span>
+<span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 <h5 class="text-center pt-3">
 {{trans('lang.thank_you')}}
 </h5>
-<span>----------------------------------------------------------------------------------------------------</span>
+<span>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
 </div>
 </div>
 </div>
@@ -203,12 +203,16 @@ var database = firebase.firestore();
 var ref = database.collection('restaurant_orders').where("id","==",id);
 var currentCurrency = '';
 var currencyAtRight = false;
+var decimal_degits = 0;
 var refCurrency = database.collection('currencies').where('isActive', '==' , true);
 
 refCurrency.get().then( async function(snapshots){  
     var currencyData = snapshots.docs[0].data();
     currentCurrency = currencyData.symbol;
     currencyAtRight = currencyData.symbolAtRight;
+    if (currencyData.decimal_degits) {
+       decimal_degits = currencyData.decimal_degits;
+    }
 }); 
 
 ref.get().then( async function(snapshots){
@@ -443,13 +447,23 @@ ref.get().then( async function(snapshots){
                 
                 html=html+'</div><div class="orders-tracking"><h6>'+val.name+'</h6><div class="orders-tracking-item-details">';
                 if(extra_count>1 || product.size){
-                  html=html+'<strong>{{trans("lang.extras")}} :</strong>';
+                  //html=html+'<strong>{{trans("lang.extras")}} :</strong>';
                 }
                 if(extra_count>1){
                    html=html+'<div class="extra"><span>{{trans("lang.extras")}} :</span><span class="ext-item">'+extra_html+'</span></div>';
                 }
                 if(product.size){
                    html=html+'<div class="type"><span>{{trans("lang.type")}} :</span><span class="ext-size">'+product.size+'</span></div>';
+                }
+                
+                if (product.variant_info) {
+                    html += '<div class="variant-info">';
+                    html += '<ul>';
+                    $.each(product.variant_info.variant_options, function (label, value) {
+                        html += '<li class="variant"><span class="label">' + label + '</span><span class="value">' + value + '</span></li>';
+                    });
+                    html += '</ul>';
+                    html += '</div>';
                 }
 
                 /*<div class="woo-orders-tracking-item-tracking-button-edit-container"><a href="#"><i class="fa fa-edit"></i></a></div>*/
@@ -458,18 +472,18 @@ ref.get().then( async function(snapshots){
                 /*if(val.hasOwnProperty('discountPrice') && val.discountPrice != ''){
                     price_item=parseFloat(val.discountPrice).toFixed(2);
                 }else{*/
-                    price_item=parseFloat(val.price).toFixed(2);  
+                    price_item=parseFloat(val.price).toFixed(decimal_degits);  
                 /*}*/
                 totalProductPrice =  parseFloat(price_item)*parseInt(val.quantity);
                 var extras_price=0;
                 if(product.extras!=undefined && product.extras!='' && product.extras.length>0){
-                  extras_price_item=(parseFloat(val.extras_price)*parseInt(val.quantity)).toFixed(2);
+                  extras_price_item=(parseFloat(val.extras_price)*parseInt(val.quantity)).toFixed(decimal_degits);
                   if(parseFloat(extras_price_item)!=NaN && val.extras_price!=undefined){
                       extras_price=extras_price_item;
                   }
                   totalProductPrice =parseFloat(extras_price)+parseFloat(totalProductPrice);
                 }
-                totalProductPrice=parseFloat(totalProductPrice).toFixed(2);
+                totalProductPrice=parseFloat(totalProductPrice).toFixed(decimal_degits);
 
                 if(currencyAtRight){
                     price_val = price_item+""+currentCurrency;
@@ -495,13 +509,13 @@ ref.get().then( async function(snapshots){
           totalProductPrice=0;
           
           if(currencyAtRight){
-            total_item_price = total_item_price+""+currentCurrency;
-            total_addon_price = total_addon_price+""+currentCurrency;
-            $('.total_price').text(total_price+""+currentCurrency);
+            total_item_price = parseFloat(total_item_price).toFixed(decimal_degits) + "" + currentCurrency;
+            total_addon_price = parseFloat(total_addon_price).toFixed(decimal_degits) + "" + currentCurrency;
+            $('.total_price').text(parseFloat(total_price).toFixed(decimal_degits) + "" + currentCurrency);
           }else{
-            total_item_price = currentCurrency+""+total_item_price;
-            total_addon_price = currentCurrency+""+total_addon_price;
-            $('.total_price').text(currentCurrency+""+total_price);
+            total_item_price = currentCurrency + "" + parseFloat(total_item_price).toFixed(decimal_degits);
+            total_addon_price = currentCurrency + "" + parseFloat(total_addon_price).toFixed(decimal_degits);
+            $('.total_price').text(currentCurrency + "" + parseFloat(total_price).toFixed(decimal_degits));
           }
           $('.total_item_price').text(total_item_price);
           $('.total_addon_price').text(total_addon_price);
@@ -549,9 +563,9 @@ function buildHTMLProductstotal(snapshotsProducts){
             total_price -=parseFloat(discount);
 
             if(currencyAtRight){
-                discount_val = discount+""+currentCurrency;
+                discount_val = parseFloat(discount).toFixed(decimal_degits) + "" + currentCurrency;
             }else{
-               discount_val = currentCurrency+""+discount;
+               discount_val = currentCurrency + "" + parseFloat(discount).toFixed(decimal_degits);
             }
 
             couponCode_html='';
@@ -564,13 +578,13 @@ function buildHTMLProductstotal(snapshotsProducts){
           }
           var special_discount = 0;
           if(specialDiscount != undefined){
-            special_discount = parseFloat(specialDiscount.special_discount).toFixed(2);
+            special_discount = parseFloat(specialDiscount.special_discount).toFixed(decimal_degits);
             total_price = total_price - special_discount;
 
             if(currencyAtRight){
-              special_discount = discount+""+currentCurrency;
+              special_discount = parseFloat(discount).toFixed(decimal_degits) +""+currentCurrency;
             }else{
-              special_discount = currentCurrency+""+discount;
+              special_discount = currentCurrency+""+ parseFloat(discount).toFixed(decimal_degits);
             }
 
             $('.total_special_discount_amount').text(special_discount);
@@ -590,10 +604,10 @@ function buildHTMLProductstotal(snapshotsProducts){
               if(snapshotsProducts.hasOwnProperty('taxSetting')){
                   if(snapshotsProducts.taxSetting.type && snapshotsProducts.taxSetting.tax){
                       if(snapshotsProducts.taxSetting.type=="percent"){
-                          tax=parseFloat((snapshotsProducts.taxSetting.tax*total_price)/100).toFixed(2);
+                          tax=parseFloat((snapshotsProducts.taxSetting.tax*total_price)/100).toFixed(decimal_degits);
                           taxlabeltype="%";
                       }else{
-                          tax=parseFloat(snapshotsProducts.taxSetting.tax).toFixed(2);
+                          tax=parseFloat(snapshotsProducts.taxSetting.tax).toFixed(decimal_degits);
                           taxlabeltype="fix";
                       }
                       taxlabel = snapshotsProducts.taxSetting.label;
@@ -612,19 +626,19 @@ function buildHTMLProductstotal(snapshotsProducts){
                   $('.total_tax_amount').text("+ " + currentCurrency+""+tax+'('+taxlabel+' '+snapshotsProducts.taxSetting.tax+' '+taxlabeltype+')');
                 }
 
-                total_price = total_price + tax;
+                total_price = total_price + parseFloat(tax);
               
              }
 
              if(intRegex.test(deliveryCharge) || floatRegex.test(deliveryCharge)) {
 
-                deliveryCharge=parseFloat(deliveryCharge).toFixed(2);
+                deliveryCharge=parseFloat(deliveryCharge).toFixed(decimal_degits);
                 total_price +=parseFloat(deliveryCharge);
                 
                 if(currencyAtRight){
-                  deliveryCharge_val = "+ " + deliveryCharge+""+currentCurrency;
+                  deliveryCharge_val = "+ " + parseFloat(deliveryCharge).toFixed(decimal_degits) + "" + currentCurrency;
                 }else{
-                   deliveryCharge_val = "+ " + currentCurrency+""+deliveryCharge;
+                   deliveryCharge_val = "+ " + currentCurrency + "" + parseFloat(deliveryCharge).toFixed(decimal_degits);
                 }
                 if (takeAway =='' || takeAway == false) {
                     deliveryChargeVal = deliveryCharge;
@@ -636,14 +650,14 @@ function buildHTMLProductstotal(snapshotsProducts){
           var total_item_price=total_price;
           if(intRegex.test(tip_amount) || floatRegex.test(tip_amount)) {
 
-              tip_amount=parseFloat(tip_amount).toFixed(2);
+              tip_amount=parseFloat(tip_amount).toFixed(decimal_degits);
               total_price +=parseFloat(tip_amount);
-              total_price=parseFloat(total_price).toFixed(2);
+              total_price=parseFloat(total_price).toFixed(decimal_degits);
               
                 if(currencyAtRight){
-                  tip_amount_val ='+'+ tip_amount+""+currentCurrency;
+                  tip_amount_val = '+' + parseFloat(tip_amount).toFixed(decimal_degits) + "" + currentCurrency;
                 }else{
-                   tip_amount_val = '+' +currentCurrency+""+tip_amount;
+                   tip_amount_val = '+' + currentCurrency + "" + parseFloat(tip_amount).toFixed(decimal_degits);
                 }
                 if (takeAway =='' || takeAway == false) {
                     html=html+'<tr><td class="label">{{trans("lang.tip_amount")}}</td><td class="tip_amount_val">+'+tip_amount_val+'</td></tr>';
@@ -652,9 +666,9 @@ function buildHTMLProductstotal(snapshotsProducts){
             }
 
             if(currencyAtRight){
-              total_price_val = parseFloat(total_price).toFixed(2)+""+currentCurrency;
+              total_price_val = parseFloat(total_price).toFixed(decimal_degits)+""+currentCurrency;
             }else{
-               total_price_val = currentCurrency+""+parseFloat(total_price).toFixed(2);
+               total_price_val = currentCurrency+""+parseFloat(total_price).toFixed(decimal_degits);
             }
 
             $('.total_amount').text(total_price_val);

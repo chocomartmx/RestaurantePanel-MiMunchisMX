@@ -47,7 +47,7 @@
                   <option vale="Percentage">{{trans('lang.coupon_percent')}}</option>
                   <option value="Fix Price">{{trans('lang.coupon_fixed')}}</option>
                 </select>
-                <div class="form-text text-muted">{{ trans("lang.coupon_discount_help") }}</div>  
+                <div class="form-text text-muted">{{ trans("lang.coupon_discount_type_help") }}</div>
               </div>
             </div>
 
@@ -55,7 +55,9 @@
               <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
               <div class="col-7">
                 <input type="number" type="text" class="form-control coupon_discount">
-                <div class="form-text text-muted">{{ trans("lang.coupon_discount_type_help") }}</div>
+               
+
+                <div class="form-text text-muted">{{ trans("lang.coupon_discount_help") }}</div>  
               </div>
             </div>
 
@@ -280,11 +282,11 @@ $(document).ready(function(){
   var resturant_id = $("#vendor_restaurant_select option:selected").val();
   console.log('resturant_id '+resturant_id);
 
-              var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE', 0); ?>";
-                if(is_disable_delete == 1){
-                    alert("Do not alllow to change in demo content !");
-                    return false;
-                }
+              // var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE', 0); ?>";
+              //   if(is_disable_delete == 1){
+              //       alert("Do not alllow to change in demo content !");
+              //       return false;
+              //   }
 
       if(code == ''){
         $(".error_top").show();
@@ -353,6 +355,7 @@ function handleFileSelect(evt) {
          
       // console.log(theFile);
       var timestamp = Number(new Date());      
+      var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
       var uploadTask = storageRef.child(filename).put(theFile);
       console.log(uploadTask);
       uploadTask.on('state_changed', function(snapshot){

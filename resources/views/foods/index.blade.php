@@ -68,11 +68,27 @@ error_reporting(E_ALL ^ E_NOTICE);
                             <div id="users-table_filter" class="pull-right"><label>{{trans('lang.search_by')}}
                                 <select name="selected_search" id="selected_search" class="form-control input-sm">
                                     <option value="name">{{ trans('lang.name')}}</option>
+                                    <option value="category">{{ trans('lang.food_category_id')}}</option>
                                 </select>
                                 <div class="form-group">
-                                <input type="search" id="search" class="search form-control" placeholder="Search"></label>&nbsp;<button onclick="searchtext();" class="btn btn-warning btn-flat">{{trans('lang.search')}}</button>&nbsp;<button onclick="searchclear();" class="btn btn-warning btn-flat">{{trans('lang.clear')}}</button>
-                            </div>
-                            </div>
+                                            <input type="search" id="search" class="search form-control"
+                                                   placeholder="Search">
+                                            <select id="category_search_dropdown" class="form-control">
+                                                <option value="All">
+                                                    Select Category
+                                                </option>
+                                            </select>
+                                         
+
+
+                                        </div>   
+                                        <button onclick="searchtext();" class="btn btn-warning btn-flat">
+                                        {{trans('lang.search')}}
+                                    </button>&nbsp;<button onclick="searchclear();"
+                                                           class="btn btn-warning btn-flat">
+                                        {{trans('lang.clear')}}
+                                    </button>                         
+                                    </div>
  
                                 <div class="table-responsive m-t-10">
 
@@ -82,6 +98,10 @@ error_reporting(E_ALL ^ E_NOTICE);
                                         <thead>
 
                                             <tr>
+                                            <th class="delete-all"><input type="checkbox" id="is_active"><label
+                                            class="col-3 control-label" for="is_active">
+                                        <a id="deleteAll" class="do_not_delete" href="javascript:void(0)"><i
+                                                    class="fa fa-trash"></i> {{trans('lang.all')}}</a></label></th>
                                                 <th>{{trans('lang.food_image')}}</th>
                                                 <th>{{trans('lang.food_name')}}</th>
                                                 <th>{{trans('lang.food_price')}}</th>
@@ -153,17 +173,23 @@ error_reporting(E_ALL ^ E_NOTICE);
     var activeCurrencyref = database.collection('currencies').where('isActive',"==",true);
     var activeCurrency = '';
     var currencyAtRight = false;
+    var decimal_degits = 0;
+
     activeCurrencyref.get().then( async function(currencySnapshots){
       currencySnapshotsdata =  currencySnapshots.docs[0].data();
       activeCurrency = currencySnapshotsdata.symbol;
       currencyAtRight = currencySnapshotsdata.symbolAtRight;
+
+      if (currencySnapshotsdata.decimal_degits) {
+            decimal_degits = currencySnapshotsdata.decimal_degits;
+        }
     })
     console.log('vendorUserId '+vendorUserId);
     getVendorId(vendorUserId).then(data => {
         vendorId= data;
         ref= database.collection('vendor_products').where('vendorID',"==",vendorId);
         $(document).ready(function() {
-
+            $('#category_search_dropdown').hide();
             $(document.body).on('click', '.redirecttopage' ,function(){    
                 var url=$(this).attr('data-url');
                 window.location.href = url;
@@ -201,7 +227,28 @@ error_reporting(E_ALL ^ E_NOTICE);
         });
 
     })
+    $(document.body).on('change', '#selected_search', function () {
 
+ if (jQuery(this).val() == 'category') {
+   
+        var ref_category = database.collection('vendor_categories');
+    
+    ref_category.get().then(async function (snapshots) {
+        snapshots.docs.forEach((listval) => {
+            var data = listval.data();
+            $('#category_search_dropdown').append($("<option></option").attr("value", data.id).text(data.title));
+
+        });
+
+    });
+    jQuery('#search').hide();
+    jQuery('#category_search_dropdown').show();
+} else {
+    jQuery('#search').show();
+    jQuery('#category_search_dropdown').hide();
+
+}
+});
     function buildHTML(snapshots){
         var html='';
         var alldata=[];
@@ -234,6 +281,8 @@ error_reporting(E_ALL ^ E_NOTICE);
                 console.log(val.vendorID);
                 var route1 =  '{{route("foods.edit",":id")}}';
                 route1 = route1.replace(':id', id);
+                html = html + '<td class="delete-all"><input type="checkbox" id="is_open_' + id + '" class="is_open" dataId="' + id + '"><label class="col-3 control-label"\n' +
+                'for="is_open_' + id + '" ></label></td>';
                 if(val.photo == ''){     
                       html=html+'<td><img class="rounded" style="width:50px" src="'+placeholderImage+'" alt="image"></td>';
                 }else{
@@ -243,29 +292,29 @@ error_reporting(E_ALL ^ E_NOTICE);
                 // html=html+'<td><a href="'+route1+'">'+val.name+'</a></td>';
                 html=html+'<td data-url="'+route1+'" class="redirecttopage">'+val.name+'</td>';
                 if(val.hasOwnProperty('disPrice') && val.disPrice != '' && val.disPrice != '0' ){
-                    if(currencyAtRight){
+                    if (currencyAtRight) {
 
-                        html=html+'<td>'+val.disPrice+''+activeCurrency+' <s>'+val.price+''+activeCurrency+'</s></td>';
-                    }else{
-                         html=html+'<td>'+activeCurrency+''+val.disPrice+' <s>'+activeCurrency+''+val.price+'</s></td>';
+                    html = html + '<td>' + parseFloat(val.disPrice).toFixed(decimal_degits) + '' + activeCurrency + ' <s>' + parseFloat(val.price).toFixed(decimal_degits) + '' + activeCurrency + '</s></td>';
+                    } else {
+                    html = html + '<td>' + activeCurrency + '' + parseFloat(val.disPrice).toFixed(decimal_degits) + ' <s>' + activeCurrency + '' + parseFloat(val.price).toFixed(decimal_degits) + '</s></td>';
                     }
-                    
-                }else{    
-                
-                if(currencyAtRight){
-                        html=html+'<td>'+val.price+''+activeCurrency+'</td>';
-                    }else{
-                         html=html+'<td>'+activeCurrency+''+val.price+'</td>';
+                    } else {
+
+                    if (currencyAtRight) {
+                    html = html + '<td>' + parseFloat(val.price).toFixed(decimal_degits) + '' + activeCurrency + '</td>';
+                    } else {
+                    html = html + '<td>' + activeCurrency + '' + parseFloat(val.price).toFixed(decimal_degits) + '</td>';
                     }
-                }
+                    }
 
                 const category = productCategory(val.categoryID);
                 html=html+'<td class="category_'+val.categoryID+'"></td>';
-                if(val.publish){
-                    html=html+'<td><span class="badge badge-success">Yes</span></td>';
-                }else{
-                    html=html+'<td><span class="badge badge-danger">No</span></td>';
-                }
+                
+                if (val.publish) {
+                html = html + '<td><label class="switch"><input type="checkbox" checked id="' + val.id + '" name="publish"><span class="slider round"></span></label></td>';
+            } else {
+                html = html + '<td><label class="switch"><input type="checkbox" id="' + val.id + '" name="publish"><span class="slider round"></span></label></td>';
+            }
                 html=html+'<td class="action-btn"><a href="'+route1+'"><i class="fa fa-edit"></i></a><a id="'+val.id+'" class="do_not_delete" name="food-delete" href="javascript:void(0)"><i class="fa fa-trash"></i></a></td>';
 
                 html=html+'</tr>';
@@ -273,6 +322,47 @@ error_reporting(E_ALL ^ E_NOTICE);
           });
           return html;      
 }
+/* toggal publish action code start*/
+$(document).on("click","input[name='publish']",function(e){
+                var ischeck=$(this).is(':checked');
+                var id=this.id;
+                if(ischeck){
+                database.collection('vendor_products').doc(id).update({'publish': true}).then(function (result) {
+
+                });
+                }else{
+                database.collection('vendor_products').doc(id).update({'publish': false}).then(function (result) {
+
+                });
+                }
+
+            });
+
+    /*toggal publish action code end*/
+$("#is_active").click(function () {
+        $("#example24 .is_open").prop('checked', $(this).prop('checked'));
+
+    });
+    $("#deleteAll").click(function () {
+        if ($('#example24 .is_open:checked').length) {
+            if (confirm('Are You Sure want to Delete Selected Data ?')) {
+                jQuery("#data-table_processing").show();
+                $('#example24 .is_open:checked').each(function () {
+                    var dataId = $(this).attr('dataId');
+                    console.log(dataId);
+                    database.collection('vendor_products').doc(dataId).delete().then(function () {
+                        window.location.reload();
+
+                    });
+
+                });
+
+            }
+        } else {
+            alert('Please Select Any One Record .');
+        }
+    });
+
 
 async function productCategory(category) {
 var productCategory='';
@@ -301,7 +391,36 @@ function prev(){
                  if(jQuery("#selected_search").val()=='name' && jQuery("#search").val().trim()!=''){
 
                     listener=ref.orderBy('name').limit(pagesize).startAt(jQuery("#search").val()).endAt(jQuery("#search").val()+'\uf8ff').startAt(end).get();
-                }else{
+                }else if (jQuery("#selected_search").val() == 'category' && jQuery("#category_search_dropdown").val().trim() != '') {
+
+                if (jQuery("#category_search_dropdown").val() == "All") {
+                    listener = ref.limit(pagesize).startAt(end).get();
+                } else {
+                    listener = ref.orderBy('categoryID').limit(pagesize).startAt(jQuery("#category_search_dropdown").val()).endAt(jQuery("#category_search_dropdown").val() + '\uf8ff').startAt(end).get();
+
+                }
+
+                listener.then((snapshots) => {
+                    html = '';
+                    html = buildHTML(snapshots);
+                    jQuery("#data-table_processing").hide();
+                    if (html != '') {
+                        append_list.innerHTML = html;
+                        start = snapshots.docs[snapshots.docs.length - 1];
+
+                        endarray.splice(endarray.indexOf(endarray[endarray.length - 1]), 1);
+
+                        if (snapshots.docs.length < pagesize) {
+
+                            jQuery("#users_table_previous_btn").hide();
+                        }
+
+                    }
+                });
+
+                }
+                
+                else{
                     listener = ref.startAt(end).limit(pagesize).get();
                 }
                 
@@ -335,7 +454,33 @@ function next(){
           if(jQuery("#selected_search").val()=='name' && jQuery("#search").val().trim()!=''){
 
                 listener=ref.orderBy('name').limit(pagesize).startAt(jQuery("#search").val()).endAt(jQuery("#search").val()+'\uf8ff').startAfter(start).get();
-            }else{
+            }else if(jQuery("#selected_search").val() == 'category' && jQuery("#category_search_dropdown").val().trim() != ''){
+                if (jQuery("#category_search_dropdown").val() == "All") {
+                    listener = ref.limit(pagesize).startAt(end).get();
+                } else {
+                    listener = ref.orderBy('categoryID').limit(pagesize).startAt(jQuery("#category_search_dropdown").val()).endAt(jQuery("#category_search_dropdown").val() + '\uf8ff').startAt(end).get();
+
+                }
+
+                listener.then((snapshots) => {
+                    html = '';
+                    html = buildHTML(snapshots);
+                    jQuery("#data-table_processing").hide();
+                    if (html != '') {
+                        append_list.innerHTML = html;
+                        start = snapshots.docs[snapshots.docs.length - 1];
+
+                        endarray.splice(endarray.indexOf(endarray[endarray.length - 1]), 1);
+
+                        if (snapshots.docs.length < pagesize) {
+
+                            jQuery("#users_table_previous_btn").hide();
+                        }
+
+                    }
+                });
+            }
+            else{
                 listener = ref.startAfter(start).limit(pagesize).get();
             }
           listener.then((snapshots) => {
@@ -359,6 +504,7 @@ function next(){
 
 function searchclear(){
     jQuery("#search").val('');
+    jQuery("#category_search_dropdown").val('All');
     searchtext();
 }
 
@@ -378,7 +524,32 @@ function searchtext(){
 
      wherequery=ref.orderBy('name').limit(pagesize).startAt(jQuery("#search").val()).endAt(jQuery("#search").val()+'\uf8ff').get();
 
-   } else{
+   }else if(jQuery("#selected_search").val() == 'category' && jQuery("#category_search_dropdown").val().trim() != ''){
+    if (jQuery("#category_search_dropdown").val() == "All") {
+                wherequery = ref.limit(pagesize).get();
+            } else {
+                wherequery = ref.orderBy('categoryID').limit(pagesize).startAt(jQuery("#category_search_dropdown").val()).endAt(jQuery("#category_search_dropdown").val() + '\uf8ff').get();
+
+            }
+
+                // wherequery.then((snapshots) => {
+                //     html = '';
+                //     html = buildHTML(snapshots);
+                //     jQuery("#data-table_processing").hide();
+                //     if (html != '') {
+                //         append_list.innerHTML = html;
+                //         start = snapshots.docs[snapshots.docs.length - 1];
+
+                //         endarray.splice(endarray.indexOf(endarray[endarray.length - 1]), 1);
+
+                //         if (snapshots.docs.length < pagesize) {
+
+                //             jQuery("#users_table_previous_btn").hide();
+                //         }
+
+                //     }
+                // });
+            } else{
 
     wherequery=ref.limit(pagesize).get();
   }
@@ -407,7 +578,12 @@ function searchtext(){
 
 $(document).on("click","a[name='food-delete']", function (e) {
         var id = this.id;
-        /* alert("This is for demo, We can't allow to delete"); */
+       
+            //    var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE', 0); ?>";
+            //     if(is_disable_delete == 1){
+            //         alert("This is for demo, We can't allow to delete");
+            //         return false;
+            //     }
      database.collection('vendor_products').doc(id).delete().then(function(result){
         window.location.href = '{{ url()->current() }}';
     });  

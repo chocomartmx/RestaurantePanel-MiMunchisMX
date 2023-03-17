@@ -346,11 +346,11 @@ function searchtext(){
 
 $(document).on("click","a[name='book-table-delete']", function (e) {
         var id = this.id;
-        var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
-        if(is_disable_delete == 1){
-             alert("This is for demo, We can't allow to delete"); 
-             return false;
-        }
+        // var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
+        // if(is_disable_delete == 1){
+        //      alert("This is for demo, We can't allow to delete"); 
+        //      return false;
+        // }
      database.collection('booked_table').doc(id).delete().then(function(result){
         window.location.href = '{{ url()->current() }}';
     });  

@@ -44,7 +44,7 @@ error_reporting(E_ALL ^ E_NOTICE);
                             
                              <div class="card-header">
                                     <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-                                        <li class="nav-item">
+                                        <li class="nav-item active">
                                             <a class="nav-link active" href="{!! url()->current() !!}"><i
                                                         class="fa fa-list mr-2"></i>{{trans('lang.vendors_payout_table')}}</a>
                                         </li>
@@ -143,11 +143,18 @@ error_reporting(E_ALL ^ E_NOTICE);
     var vendorUserId = "<?php echo $id; ?>";
     var currentCurrency ='';
     var currencyAtRight = false;
+    var decimal_degits = 0;
+
     var refCurrency = database.collection('currencies').where('isActive', '==' , true);
     refCurrency.get().then( async function(snapshots){
         var currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
+
+        
+        if (currencyData.decimal_degits) {
+            decimal_degits = currencyData.decimal_degits;
+        }
     });
 
     var append_list = '';
@@ -213,11 +220,11 @@ error_reporting(E_ALL ^ E_NOTICE);
             var val=listval;
             var price_val = 0;
             html=html+'<tr>';
-                if(currencyAtRight){
-                    price_val = val.amount+""+currentCurrency;
-                }else{
-                     price_val = currentCurrency+""+val.amount;
-                }
+            if (currencyAtRight) {
+                price_val = parseFloat(val.amount).toFixed(decimal_degits) + "" + currentCurrency;
+            } else {
+                price_val = currentCurrency + "" + parseFloat(val.amount).toFixed(decimal_degits);
+            }
 
             html = html+'<td>'+price_val+'</td>';
             var date =  val.paidDate.toDate().toDateString();

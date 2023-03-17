@@ -44,7 +44,7 @@
                   <option vale="Percentage">{{trans('lang.coupon_percent')}}</option>
                   <option value="Fix Price">{{trans('lang.coupon_fixed')}}</option>
                 </select>
-                <div class="form-text text-muted">{{ trans("lang.coupon_discount_help") }}</div>  
+                <div class="form-text text-muted">{{ trans("lang.coupon_discount_type_help") }}</div>
               </div>
             </div>
 
@@ -52,7 +52,8 @@
               <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
               <div class="col-7">
                 <input type="number" type="text" class="form-control coupon_discount">
-                <div class="form-text text-muted">{{ trans("lang.coupon_discount_type_help") }}</div>
+               
+                <div class="form-text text-muted">{{ trans("lang.coupon_discount_help") }}</div>  
               </div>
             </div>
 
@@ -246,7 +247,8 @@ function handleFileSelect(evt) {
       // console.log(filename);
          
       // console.log(theFile);
-      var timestamp = Number(new Date());      
+      var timestamp = Number(new Date());   
+      var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;   
       var uploadTask = storageRef.child(filename).put(theFile);
       console.log(uploadTask);
       uploadTask.on('state_changed', function(snapshot){

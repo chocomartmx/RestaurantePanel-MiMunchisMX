@@ -53,8 +53,8 @@ error_reporting(E_ALL ^ E_NOTICE);
                         <div class="card">
                             <div class="card-header">
                                 <ul class="nav nav-tabs align-items-end card-header-tabs w-100">
-                                    <li class="nav-item">
-                                      <a class="nav-link active" href="{!! route('coupons') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.coupon_table')}}</a>
+                                    <li class="nav-item active">
+                                      <a class="nav-link" href="{!! route('coupons') !!}"><i class="fa fa-list mr-2"></i>{{trans('lang.coupon_table')}}</a>
                                     </li>
                                     <?php if($id!=''){?>
                                     <li class="nav-item">
@@ -91,7 +91,11 @@ error_reporting(E_ALL ^ E_NOTICE);
                                         <thead>
 
                                             <tr>
-
+                                            <th class="delete-all"><input type="checkbox" id="is_active"><label
+                                            class="col-3 control-label" for="is_active"
+                                    ><a id="deleteAll" class="do_not_delete"
+                                        href="javascript:void(0)"><i
+                                                    class="fa fa-trash"></i> {{trans('lang.all')}}</a></label></th>
                                                 <th>{{trans('lang.coupon_code')}}</th>
                                                 
                                                 <th >{{trans('lang.coupon_discount')}}</th>
@@ -162,11 +166,17 @@ error_reporting(E_ALL ^ E_NOTICE);
 
     var currentCurrency = '';
     var currencyAtRight = false;
+    var decimal_degits = 0;
+
     var refCurrency = database.collection('currencies').where('isActive', '==' , true);
     refCurrency.get().then( async function(snapshots){  
         var currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
+
+        if (currencyData.decimal_degits) {
+            decimal_degits = currencyData.decimal_degits;
+        }
     }); 
 
     var append_list = '';
@@ -234,23 +244,25 @@ function buildHTML(snapshots){
             
                 html=html+'<tr>';
                 newdate='';
-                if(currencyAtRight){
-                    if (val.discountType =='Percent' || val.discountType =='Percentage') {
-                        discount_price = val.discount+"%";
-                    }else{
-                        discount_price = val.discount+""+currentCurrency;
-                    }
-                }else{
-                    if (val.discountType =='Percent' || val.discountType == 'Percentage') {
-                        discount_price = val.discount+"%";
-                    }else{
-                        discount_price = currentCurrency+""+val.discount;
-                    }
+                if (currencyAtRight) {
+                if (val.discountType == 'Percent' || val.discountType == 'Percentage') {
+                    discount_price = val.discount + "%";
+                } else {
+                    discount_price = parseFloat(val.discount).toFixed(decimal_degits) + "" + currentCurrency;
                 }
+            } else {
+                if (val.discountType == 'Percent' || val.discountType == 'Percentage') {
+                    discount_price = val.discount + "%";
+                } else {
+                    discount_price = currentCurrency + "" + parseFloat(val.discount).toFixed(decimal_degits);
+                }
+            }
                 var id = val.id;
                 var route1 =  '{{route("coupons.edit",":id")}}';
                 route1 = route1.replace(':id', id);
                // console.log('val'+JSON.stringify(val));
+               html = html + '<td class="delete-all"><input type="checkbox" id="is_open_' + id + '" class="is_open" dataId="' + id + '"><label class="col-3 control-label"\n' +
+                'for="is_open_' + id + '" ></label></td>';
                 html=html+'<td  data-url="'+route1+'" class="redirecttopage">'+val.code+'</td>';
                 html=html+'<td>'+discount_price+'</td>';
                 html=html+'<td>'+val.description+'</td>';
@@ -268,11 +280,11 @@ function buildHTML(snapshots){
                 }else{
                   html = html + '<td></td>';
                 }
-                if(val.isEnabled){
-                  html=html+'<td><span class="badge badge-success">Yes</span></td>';
-                }else{                
-                  html=html+'<td><span class="badge badge-danger">No</span></td>';
-                }
+                if (val.isEnabled) {
+                html = html + '<td><label class="switch"><input type="checkbox" checked id="' + val.id + '" name="isEnabled"><span class="slider round"></span></label></td>';
+            } else {
+                html = html + '<td><label class="switch"><input type="checkbox" id="' + val.id + '" name="isEnabled"><span class="slider round"></span></label></td>';
+            }
 
                 // if(val.hasOwnProperty("updatedAt")){
                 //   var date =  val.updatedAt.toDate().toDateString();
@@ -291,6 +303,47 @@ function buildHTML(snapshots){
           });
           return html;      
 }
+/* toggal publish action code start*/
+    $(document).on("click","input[name='isEnabled']",function(e){
+                var ischeck=$(this).is(':checked');
+                var id=this.id;
+                if(ischeck){
+                database.collection('coupons').doc(id).update({'isEnabled': true}).then(function (result) {
+
+                });
+                }else{
+                database.collection('coupons').doc(id).update({'isEnabled': false}).then(function (result) {
+
+                });
+                }
+
+            });
+
+    /*toggal publish action code end*/
+$("#is_active").click(function () {
+        $("#example24 .is_open").prop('checked', $(this).prop('checked'));
+
+    });
+    $("#deleteAll").click(function () {
+        if ($('#example24 .is_open:checked').length) {
+            if (confirm('Are You Sure want to Delete Selected Data ?')) {
+                jQuery("#data-table_processing").show();
+                $('#example24 .is_open:checked').each(function () {
+                    var dataId = $(this).attr('dataId');
+                    console.log(dataId);
+                    database.collection('coupons').doc(dataId).delete().then(function () {
+                        window.location.reload();
+
+                    });
+
+                });
+
+            }
+        } else {
+            alert('Please Select Any One Record .');
+        }
+    });
+
 
   function prev(){
       if(endarray.length==1){
@@ -434,10 +487,10 @@ async function getVendorId(vendorUser){
 
 function disableClick(){
     var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
-    if(is_disable_delete == 1){
-        jQuery("a.do_not_delete").removeAttr("name");
-        jQuery("a.do_not_delete").attr("name","alert_demo");       
-    }
+    // if(is_disable_delete == 1){
+    //     jQuery("a.do_not_delete").removeAttr("name");
+    //     jQuery("a.do_not_delete").attr("name","alert_demo");       
+    // }
 }
 
 

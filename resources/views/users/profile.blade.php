@@ -26,7 +26,7 @@
             <div class="restaurant_payout_create-inner">
 
              <fieldset>
-              <legend>{{trans('lang.admin_area')}}</legend>
+              <legend>{{trans('lang.basic_details')}}</legend>
 
               <div class="form-group row width-50">
                 <label class="col-3 control-label">{{trans('lang.first_name')}}</label>
@@ -224,7 +224,7 @@
 
         <div class="form-group row">
           <div>
-            <input type="file" onChange="handleFileSelect(event,'photos')">
+            <input type="file" id="galleryImage" onChange="handleFileSelect(event,'photos')">
             <div id="uploding_image_photos"></div>
           </div>
         </div>
@@ -237,44 +237,44 @@
 
           <div class="form-check width-100">
             <input type="checkbox" id="Free_Wi_Fi">
-            <label class="col-3 control-label" for="Free_Wi_Fi">Free Wi-Fi</label>
+            <label class="col-3 control-label" for="Free_Wi_Fi">{{trans('lang.free_wi_fi')}}</label>
           </div>
           <div class="form-check width-100">
             <input type="checkbox" id="Good_for_Breakfast">
-            <label class="col-3 control-label" for="Good_for_Breakfast">Good for Breakfast</label>
+            <label class="col-3 control-label" for="Good_for_Breakfast">{{trans('lang.good_for_breakfast')}}</label>
           </div>
           <div class="form-check width-100">
             <input type="checkbox" id="Good_for_Dinner">
-            <label class="col-3 control-label" for="Good_for_Dinner">Good for Dinner</label>
+            <label class="col-3 control-label" for="Good_for_Dinner">{{trans('lang.good_for_dinner')}}</label>
           </div>
           <div class="form-check width-100">
             <input type="checkbox" id="Good_for_Lunch">
-            <label class="col-3 control-label" for="Good_for_Lunch">Good for Lunch</label>
+            <label class="col-3 control-label" for="Good_for_Lunch">{{trans('lang.good_for_lunch')}}</label>
           </div>
 
           <div class="form-check width-100">
             <input type="checkbox" id="Live_Music">
-            <label class="col-3 control-label" for="Live_Music">Live Music</label>
+            <label class="col-3 control-label" for="Live_Music">{{trans('lang.Live_Music')}}</label>
           </div>
 
           <div class="form-check width-100">
             <input type="checkbox" id="Outdoor_Seating">
-            <label class="col-3 control-label" for="Outdoor_Seating">Outdoor Seating</label>
+            <label class="col-3 control-label" for="Outdoor_Seating">{{trans('lang.outdoor_seating')}}outdoor_seating</label>
           </div>
 
           <div class="form-check width-100">
             <input type="checkbox" id="Takes_Reservations">
-            <label class="col-3 control-label" for="Takes_Reservations">Takes Reservations</label>
+            <label class="col-3 control-label" for="Takes_Reservations">{{trans('lang.takes_reservations')}}</label>
           </div>
 
           <div class="form-check width-100">
             <input type="checkbox" id="Vegetarian_Friendly">
-            <label class="col-3 control-label" for="Vegetarian_Friendly">Vegetarian Friendly</label>
+            <label class="col-3 control-label" for="Vegetarian_Friendly">{{trans('lang.vegetarian_friendly')}}</label>
           </div>
 
         </div>
       </fieldset>
-      <fieldset>
+      <!-- <fieldset>
         <legend>{{trans('lang.timing')}}</legend>
 
         <div class="form-group row">
@@ -294,149 +294,672 @@
           </div>
 
         </div>
-      </fieldset>
-
+      </fieldset> -->
       <fieldset>
-        <legend>{{trans('lang.restaurant_status')}}</legend>
+                                    <legend>{{trans('lang.working_hours')}}</legend>
 
-        <div class="form-group row">
-
-          <div class="form-group row width-50">
-            <div class="form-check width-100">
-              <input type="checkbox" id="is_open">
-              <label class="col-3 control-label" for="is_open">{{trans('lang.Is_Open')}}</label>
-            </div>
-          </div>
-
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>{{trans('lang.dine_in_future_setting')}}</legend>
-
-        <div class="form-group row">
-
-          <div class="form-group row width-50">
-            <div class="form-check width-100">
-              <input type="checkbox" id="dine_in_feature" class="">
-              <label class="col-3 control-label" for="dine_in_feature">{{trans('lang.enable_dine_in_feature')}}</label>
-            </div>
-          </div>
-
-          <div class="divein_div" style="display:none">
-
-            <div class="form-group row width-50">
-              <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
-              <div class="col-7">
-                <input type="time" class="form-control" id="openDineTime" required>
-              </div>
-            </div>
-
-            <div class="form-group row width-50">
-              <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
-              <div class="col-7">
-                <input type="time" class="form-control" id="closeDineTime" required>
-              </div>
-            </div> 
-
-            <div class="form-group row width-50">
-              <label class="col-3 control-label">Cost</label>
-              <div class="col-7">
-                <input type="number" class="form-control restaurant_cost" required>
-              </div>
-            </div>
-            <div class="form-group row width-100 restaurant_image">
-              <label class="col-3 control-label">Menu Card Images</label>
-              <div class="">
-                <div id="photos_menu_card"></div>
-              </div>
-            </div>
-            <div class="form-group row">
-              <div>
-                <input type="file" onChange="handleFileSelectMenuCard(event)">
-                <div id="uploaded_image_menu"></div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </fieldset>
-      <fieldset> 
-        <legend>{{trans('lang.deliveryCharge')}}</legend>
-
-        <div class="form-group row">
-
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{ trans('lang.delivery_charges_per_km')}}</label>
-            <div class="col-7">
-              <input type="number" class="form-control" id="delivery_charges_per_km">
-            </div>
-          </div>
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{ trans('lang.minimum_delivery_charges')}}</label>
-            <div class="col-7">
-              <input type="number" class="form-control" id="minimum_delivery_charges">
-            </div>
-          </div>
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{ trans('lang.minimum_delivery_charges_within_km')}}</label>
-            <div class="col-7">
-              <input type="number" class="form-control" id="minimum_delivery_charges_within_km">
-            </div>
-          </div>
-          
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend>{{trans('lang.bankdetails')}}</legend>
-
-        <div class="form-group row">
-
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{
-            trans('lang.bank_name')}}</label>
-            <div class="col-7">
-              <input type="text" name="bank_name" class="form-control" id="bankName">
-            </div>
-          </div>
-
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{
-            trans('lang.branch_name')}}</label>
-            <div class="col-7">
-              <input type="text" name="branch_name" class="form-control" id="branchName">
-            </div>
-          </div>
+                                    <div class="form-group row">
+                                        <label class="col-12 control-label"
+                                               style="color:red;font-size:15px;">{{trans('lang.working_hour_note')}}</label>
+                                        <div class="form-group row width-100">
+                                            <div class="col-7">
+                                                <button type="button"
+                                                        class="btn btn-primary  add_working_hours_restaurant_btn">
+                                                    <i></i>{{trans('lang.add_working_hours')}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="working_hours_div" style="display:none">
 
 
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{
-            trans('lang.holer_name')}}</label>
-            <div class="col-7">
-              <input type="text" name="holer_name" class="form-control" id="holderName">
-            </div>
-          </div>
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.sunday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary add_more_sunday"
+                                                            onclick="addMorehour('Sunday','sunday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
 
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{
-            trans('lang.account_number')}}</label>
-            <div class="col-7">
-              <input type="text" name="account_number" class="form-control" id="accountNumber">
-            </div>
-          </div>
 
-          <div class="form-group row width-100">
-            <label class="col-4 control-label">{{
-            trans('lang.other_information')}}</label>
-            <div class="col-7">
-              <input type="text" name="other_information" class="form-control" id="otherDetails">
-            </div>
-          </div>
+                                            <div class="restaurant_discount_options_Sunday_div restaurant_discount mb-5"
+                                                 style="display:none">
 
-        </div>
-      </fieldset>
 
+                                                <table class="booking-table" id="working_hour_table_Sunday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+
+                                            </div>
+
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.monday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary add_more_sunday"
+                                                            onclick="addMorehour('Monday','monday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Monday_div restaurant_discount mb-5"
+                                                 style="display:none">
+
+                                                <table class="booking-table" id="working_hour_table_Monday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.tuesday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMorehour('Tuesday','tuesday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Tuesday_div restaurant_discount mb-5"
+                                                 style="display:none">
+
+                                                <table class="booking-table" id="working_hour_table_Tuesday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.wednesday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMorehour('Wednesday','wednesday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="restaurant_discount_options_Wednesday_div restaurant_discount mb-5"
+                                                 style="display:none">
+                                                <table class="booking-table" id="working_hour_table_Wednesday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.thursday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMorehour('Thursday','thursday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Thursday_div restaurant_discount mb-5"
+                                                 style="display:none">
+                                                <table class="booking-table" id="working_hour_table_Thursday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.friday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMorehour('Friday','friday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Friday_div restaurant_discount mb-5"
+                                                 style="display:none">
+                                                <table class="booking-table" id="working_hour_table_Friday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+
+                                            <div class="form-group row mb-0">
+                                                <label class="col-1 control-label">{{trans('lang.satuarday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMorehour('Satuarday','satuarday','1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="restaurant_discount_options_Satuarday_div restaurant_discount mb-5"
+                                                 style="display:none">
+                                                <table class="booking-table" id="working_hour_table_Satuarday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.from')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.to')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                             {{--   <fieldset>
+                                  <legend>{{trans('lang.restaurant_status')}}</legend>
+
+                                  <div class="form-group row">
+
+                                    <div class="form-group row width-50">
+                                      <div class="form-check width-100">
+                                        <input type="checkbox" id="is_open">
+                                        <label class="col-3 control-label" for="is_open">{{trans('lang.Is_Open')}}</label>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </fieldset>--}}
+
+                                <fieldset>
+                                  <legend>{{trans('lang.dine_in_future_setting')}}</legend>
+
+                                  <div class="form-group row">
+
+                                    <div class="form-group row width-50">
+                                      <div class="form-check width-100">
+                                        <input type="checkbox" id="dine_in_feature" class="">
+                                        <label class="col-3 control-label" for="dine_in_feature">{{trans('lang.enable_dine_in_feature')}}</label>
+                                      </div>
+                                    </div>
+
+                                    <div class="divein_div" style="display:none">
+
+                                      <div class="form-group row width-50">
+                                        <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                        <div class="col-7">
+                                          <input type="time" class="form-control" id="openDineTime" required>
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group row width-50">
+                                        <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                        <div class="col-7">
+                                          <input type="time" class="form-control" id="closeDineTime" required>
+                                        </div>
+                                      </div> 
+
+                                      <div class="form-group row width-50">
+                                        <label class="col-3 control-label">Cost</label>
+                                        <div class="col-7">
+                                          <input type="number" class="form-control restaurant_cost" required>
+                                        </div>
+                                      </div>
+                                      <div class="form-group row width-100 restaurant_image">
+                                        <label class="col-3 control-label">Menu Card Images</label>
+                                        <div class="">
+                                          <div id="photos_menu_card"></div>
+                                        </div>
+                                      </div>
+                                      <div class="form-group row">
+                                        <div>
+                                          <input type="file" onChange="handleFileSelectMenuCard(event)">
+                                          <div id="uploaded_image_menu"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </fieldset>
+                                <fieldset> 
+                                  <legend>{{trans('lang.deliveryCharge')}}</legend>
+
+                                  <div class="form-group row">
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{ trans('lang.delivery_charges_per_km')}}</label>
+                                      <div class="col-7">
+                                        <input type="number" class="form-control" id="delivery_charges_per_km">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{ trans('lang.minimum_delivery_charges')}}</label>
+                                      <div class="col-7">
+                                        <input type="number" class="form-control" id="minimum_delivery_charges">
+                                      </div>
+                                    </div>
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{ trans('lang.minimum_delivery_charges_within_km')}}</label>
+                                      <div class="col-7">
+                                        <input type="number" class="form-control" id="minimum_delivery_charges_within_km">
+                                      </div>
+                                    </div>
+                                    
+                                  </div>
+                                </fieldset>
+
+                                <fieldset>
+                                  <legend>{{trans('lang.bankdetails')}}</legend>
+
+                                  <div class="form-group row">
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{
+                                      trans('lang.bank_name')}}</label>
+                                      <div class="col-7">
+                                        <input type="text" name="bank_name" class="form-control" id="bankName">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{
+                                      trans('lang.branch_name')}}</label>
+                                      <div class="col-7">
+                                        <input type="text" name="branch_name" class="form-control" id="branchName">
+                                      </div>
+                                    </div>
+
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{
+                                      trans('lang.holer_name')}}</label>
+                                      <div class="col-7">
+                                        <input type="text" name="holer_name" class="form-control" id="holderName">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{
+                                      trans('lang.account_number')}}</label>
+                                      <div class="col-7">
+                                        <input type="text" name="account_number" class="form-control" id="accountNumber">
+                                      </div>
+                                    </div>
+
+                                    <div class="form-group row width-100">
+                                      <label class="col-4 control-label">{{
+                                      trans('lang.other_information')}}</label>
+                                      <div class="col-7">
+                                        <input type="text" name="other_information" class="form-control" id="otherDetails">
+                                      </div>
+                                    </div>
+
+                                  </div>
+                                </fieldset>
+                                
+                                <fieldset>
+                                    <legend>{{trans('lang.special_offer')}}</legend>
+
+                                    <div class="form-group row">
+                                        <label class="col-12 control-label"
+                                               style="color:red;font-size:15px;">{{trans('lang.special_discount_note')}}</label>
+                                        <div class="form-group row width-100">
+                                            <div class="col-7">
+                                                <button type="button"
+                                                        class="btn btn-primary  add_special_offer_restaurant_btn">
+                                                    <i></i>{{trans('lang.add_special_offer')}}
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="special_offer_div" style="display:none">
+
+
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.sunday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary add_more_sunday"
+                                                            onclick="addMoreButton('Sunday','sunday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="restaurant_discount_options_Sunday_div restaurant_discount"
+                                                 style="display:none">
+
+
+                                                <table class="booking-table" id="special_offer_table_Sunday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.monday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary add_more_sunday"
+                                                            onclick="addMoreButton('Monday','monday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Monday_div restaurant_discount"
+                                                 style="display:none">
+
+                                                <table class="booking-table" id="special_offer_table_Monday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.tuesday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMoreButton('Tuesday','tuesday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Tuesday_div restaurant_discount"
+                                                 style="display:none">
+
+                                                <table class="booking-table" id="special_offer_table_Tuesday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.wednesday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMoreButton('Wednesday','wednesday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="restaurant_discount_options_Wednesday_div restaurant_discount"
+                                                 style="display:none">
+                                                <table class="booking-table" id="special_offer_table_Wednesday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.thursday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMoreButton('Thursday','thursday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Thursday_div restaurant_discount"
+                                                 style="display:none">
+                                                <table class="booking-table" id="special_offer_table_Thursday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.friday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMoreButton('Friday','friday', '1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="restaurant_discount_options_Friday_div restaurant_discount"
+                                                 style="display:none">
+                                                <table class="booking-table" id="special_offer_table_Friday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+
+                                                </table>
+                                            </div>
+
+
+                                            <div class="form-group row">
+                                                <label class="col-1 control-label">{{trans('lang.satuarday')}}</label>
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-primary"
+                                                            onclick="addMoreButton('Satuarday','satuarday','1')">
+                                                        {{trans('lang.add_more')}}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="restaurant_discount_options_Satuarday_div restaurant_discount"
+                                                 style="display:none">
+                                                <table class="booking-table" id="special_offer_table_Satuarday">
+                                                    <tr>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Opening_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.Closing_Time')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}</label>
+                                                        </th>
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.coupon_discount')}}
+                                                                {{trans('lang.type')}}</label></th>
+
+                                                        <th>
+                                                            <label class="col-3 control-label">{{trans('lang.actions')}}</label>
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    </fieldset>
+                            
+                            <fieldset id="story_upload_div" style="display: none;">
+                                <legend>Story</legend>
+
+                                <div class="form-group row width-50 vendor_image">
+                                    <label class="col-3 control-label">Choose humbling GIF/Image</label>
+                                    <div class="">
+                                        <div id="story_thumbnail"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row">
+                                    <div>
+                                        <input type="file" id="file" onChange="handleStoryThumbnailFileSelect(event)">
+                                        <div id="uploding_story_thumbnail"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group row vendor_image">
+                                    <label class="col-3 control-label">Select Story Video</label>
+                                    <div class="col-12">
+                                        <div id="story_vedios" class="row"></div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div>
+                                        <input type="file" id="video_file" onChange="handleStoryFileSelect(event)">
+                                        <div id="uploding_story_video"></div>
+                                    </div>
+                                </div>
+                                
+                            </fieldset>
+                            </div>
+                            
+                            
     </div>
   </div>
 </div>
@@ -461,6 +984,7 @@
 <script>
   var database = firebase.firestore();
   var geoFirestore = new GeoFirestore(database);
+  var storageRef = firebase.storage().ref('images');
   var photo ="";
   var restaurnt_photos ="";
   var restaurantOwnerId = "";
@@ -477,13 +1001,50 @@
   var restaurant_menu_photos = [];
   var placeholderImage = '';
   var adminAllowtoChangeFivein;
+
+
+        var workingHours = [];
+        var timeslotworkSunday = [];
+        var timeslotworkMonday = [];
+        var timeslotworkTuesday = [];
+        var timeslotworkWednesday = [];
+        var timeslotworkFriday = [];
+        var timeslotworkSatuarday = [];
+        var timeslotworkThursday = [];
+
+        var specialDiscount = [];
+        var timeslotSunday = [];
+        var timeslotMonday = [];
+        var timeslotTuesday = [];
+        var timeslotWednesday = [];
+        var timeslotFriday = [];
+        var timeslotSatuarday = [];
+        var timeslotThursday = [];
+        var story_upload_time = [];
+        var story_vedios = [];
+        var story_thumbnail = '';
+        var currentCurrency = '';
+        var currencyAtRight = false;
+        var storyCount = 0;
+        var refCurrency = database.collection('currencies').where('isActive', '==', true);
+        var isStory = database.collection('settings').doc('story');
+        var storyRef = firebase.storage().ref('Story');
+        var storyImagesRef = firebase.storage().ref('Story/images');
+        refCurrency.get().then(async function (snapshots) {
+            var currencyData = snapshots.docs[0].data();
+            currentCurrency = currencyData.symbol;
+            currencyAtRight = currencyData.symbolAtRight;
+        });
   var ref_deliverycharge = database.collection('settings').doc("DeliveryCharge");
   var placeholder = database.collection('settings').doc('placeHolderImage');
   placeholder.get().then( async function(snapshotsimage){
     var placeholderImageData = snapshotsimage.data();
     placeholderImage = placeholderImageData.image;
   })
-
+  database.collection('settings').doc("specialDiscountOffer").get().then(async function (snapshots) {
+			var specialDiscountOffer = snapshots.data();
+            specialDiscountOfferisEnable = specialDiscountOffer.isEnable;
+		});
  var currentCurrency = '';
             var currencyAtRight = false;
             var refCurrency = database.collection('currencies').where('isActive', '==', true);
@@ -520,14 +1081,22 @@
     var enableddineinRestaurant = snapshotsDinein.data();
     adminAllowtoChangeFivein = enableddineinRestaurant.isEnabled;
   })
-
+  
   getVendorId(vendorUserId).then(data => {
 
     vendorId= data;
     id = vendorId;
+    console.log('VendorID:',vendorId);
     var ref = database.collection('vendors').where("id","==",vendorId);
     $(document).ready(function(){
       jQuery("#data-table_processing").show();
+      isStory.get().then(async function (snapshots) {
+            var story_data = snapshots.data();
+            if(story_data.isEnabled){
+             	$("#story_upload_div").show();
+           	}
+           	storevideoDuration = story_data.videoDuration;
+        });
       ref.get().then( async function(snapshots){
         try{ 
           var restaurant = snapshots.docs[0].data();
@@ -545,16 +1114,16 @@
           $(".uploaded_image").show();
           restaurantPhoto = restaurant.photo;
 
-          if(restaurant.opentime){
-            restaurant.opentime = moment(restaurant.opentime, 'hh:mm A').format('HH:mm');
-          }
+          // if(restaurant.opentime){
+          //   restaurant.opentime = moment(restaurant.opentime, 'hh:mm A').format('HH:mm');
+          // }
 
-          if(restaurant.closetime){
-            restaurant.closetime = moment(restaurant.closetime, 'hh:mm A').format('HH:mm');         
-          }
+          // if(restaurant.closetime){
+          //   restaurant.closetime = moment(restaurant.closetime, 'hh:mm A').format('HH:mm');         
+          // }
 
-          $("#opentime").val(restaurant.opentime);
-          $("#closetime").val(restaurant.closetime);
+          // $("#opentime").val(restaurant.opentime);
+          // $("#closetime").val(restaurant.closetime);
 
           try{
             if(restaurant.openDineTime){
@@ -651,7 +1220,6 @@
           snapshots.docs.forEach((listval) => {
             var user = listval.data();
 
-            console.log(user);
             ownerId = user.id;
             ownerphoto = user.profilePictureURL;
             restaurantOwnerPhoto = user.profilePictureURL;
@@ -686,24 +1254,22 @@
               }
             }
 
-console.log("wallet == " + user.wallet_amount);
+          if(user.wallet_amount != undefined){
+          var wallet = user.wallet_amount;
+          }else{
+          var wallet = 0;
 
-if(user.wallet_amount != undefined){
- var wallet = user.wallet_amount;
-}else{
- var wallet = 0;
+          }
 
-}
+          if (currencyAtRight) {
+            var  price_val = wallet + "" + currentCurrency;
 
-if (currencyAtRight) {
-  var  price_val = wallet + "" + currentCurrency;
+          } else {
+            var  price_val = currentCurrency + "" + wallet;
 
-} else {
-  var  price_val = currentCurrency + "" + wallet;
+          }
 
-}
-
-$('.user_wallet a').html(price_val);
+          $('.user_wallet a').html(price_val);
 
           })
         });
@@ -733,14 +1299,163 @@ $('.user_wallet a').html(price_val);
           $("#minimum_delivery_charges").val(restaurant.DeliveryCharge.minimum_delivery_charges);
           $("#minimum_delivery_charges_within_km").val(restaurant.DeliveryCharge.minimum_delivery_charges_within_km);
         }
+        await getRestaurantStory(restaurant.id);
+					
+        if (story_vedios.length > 0) {
+                        var html = '';
+                        for (var i = 0; i < story_vedios.length; i++) {
+							html += '<div class="col-md-3" id="story_div_' + i + '">\n' +
+                                '<div class="video-inner"><video width="320px" height="240px"\n' +
+                                '                                   controls="controls">\n' +
+                                '                            <source src="' + story_vedios[i] + '"\n' +
+                                '            type="video/mp4"></video><span class="remove-story-video" data-id="'+i+'" data-img="'+story_vedios[i]+'"><i class="fa fa-remove"></i></span></div></div>';
+
+                        }
+                        jQuery("#story_vedios").append(html);
+                      }
+                    if(story_thumbnail){
+
+                      html = '<div class="col-md-3"><div class="thumbnail-inner"><span class="remove-story-thumbnail" data-img="'+story_thumbnail+'"><i class="fa fa-remove"></i></span><img id="story_thumbnail_image" src="' + story_thumbnail + '" width="150px" height="150px;"></div></div>';
+                        jQuery("#story_thumbnail").html(html);
+
+                    }
 
       }catch(error){
 
       }
+      
+      if (restaurant.hasOwnProperty('specialDiscount')) {
+                    for (i = 0; i < restaurant.specialDiscount.length; i++) {
+                        var day = restaurant.specialDiscount[i]['day'];
+                        if (restaurant.specialDiscount[i]['timeslot'].length != 0) {
+                            for (j = 0; j < restaurant.specialDiscount[i]['timeslot'].length; j++) {
+                                $(".restaurant_discount_options_" + day + "_div").show();
 
+                                if (restaurant.specialDiscount[i]) {
+                                    if (restaurant.specialDiscount[i]['timeslot']) {
+
+                                        if (restaurant.specialDiscount[i]['timeslot'].length > 0) {
+                                            if (restaurant.specialDiscount[i]['timeslot'][j]) {
+                                                var timeslot = restaurant.specialDiscount[i]['timeslot'][j];
+
+                                                if (timeslot['discount']) {
+                                                    var discount = timeslot['discount'];
+
+                                                    var TimeslotVar = {
+                                                        'discount': timeslot[`discount`],
+                                                        'from': timeslot[`from`],
+                                                        'to': timeslot[`to`],
+                                                        'type': timeslot[`type`],
+                                                        'discount_type': timeslot[`discount_type`]
+                                                    };
+                                                    if (day == 'Sunday') {
+                                                        timeslotSunday.push(TimeslotVar);
+                                                    } else if (day == 'Monday') {
+                                                        timeslotMonday.push(TimeslotVar);
+                                                    } else if (day == 'Tuesday') {
+                                                        timeslotTuesday.push(TimeslotVar);
+                                                    } else if (day == 'Wednesday') {
+                                                        timeslotWednesday.push(TimeslotVar);
+                                                    } else if (day == 'Thursday') {
+                                                        timeslotThursday.push(TimeslotVar);
+                                                    } else if (day == 'Friday') {
+                                                        timeslotFriday.push(TimeslotVar);
+                                                    } else if (day == 'Satuarday') {
+                                                        timeslotSatuarday.push(TimeslotVar);
+                                                    }
+
+
+                                                    $('#special_offer_table_' + day + ' tr:last').after('<tr>' +
+                                                        '<td class="" style="width:10%;"><input type="time" class="form-control ' + i + '_' + j + '_row" value="' + timeslot[`from`] + '" id="openTime' + day + j + i + '" ></td>' +
+                                                        '<td class="" style="width:10%;"><input type="time" class="form-control ' + i + '_' + j + '_row" value="' + timeslot[`to`] + '" id="closeTime' + day + j + i + '" ></td>' +
+                                                        '<td class="" style="width:30%;">' +
+                                                        '<input type="number" class="form-control ' + i + '_' + j + '_row" value="' + timeslot[`discount`] + '" style="width:60%;" id="discount' + day + j + i + '" >' +
+                                                        '<select id="discount_type' + day + j + i + '" class="form-control ' + i + '_' + j + '_row"  style="width:40%;" ><option value="percentage"/>%</option><option value="amount"/>' + currentCurrency + '</option></select></td>' +
+                                                        '<td style="width:30%;"><select id="type' + day + j + i + '" class="form-control ' + i + '_' + j + '_row" ><option value="delivery"/>Delivery Discount</option></select>' +
+                                                        '</td>' +
+                                                        '<td class="action-btn" style="width:20%;">' +
+                                                        '<button type="button" class="btn btn-primary ' + i + '_' + j + '_row  specialDiscount_' + i + '_' + j + '"  onclick="updateMoreFunctionButton(`' + day + '`,`' + j + '`,`' + i + '`)" ><i class="fa fa-edit"></i></button>' +
+                                                        '&nbsp;&nbsp;<button type="button" class="btn btn-primary ' + i + '_' + j + '_row" onclick="deleteOffer(`' + day + '`,`' + j + '`,`' + i + '`)" ><i class="fa fa-trash"></i></button>' +
+                                                        '</td></tr>');
+
+                                                    if (timeslot[`type`] == 'amount') {
+                                                        $('#discount_type' + day + j + i).val(timeslot[`type`]);
+                                                    }
+                                                    if (timeslot[`discount_type`] == 'dinein') {
+                                                        $('#type' + day + j + i).val(timeslot[`discount_type`]);
+                                                    }
+                                                }
+                                                $('.special_offer_div').css('display','block');
+
+                                            }
+                                        }
+
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                }
+
+
+                if (restaurant.hasOwnProperty('workingHours')) {
+                    for (i = 0; i < restaurant.workingHours.length; i++) {
+                        var day = restaurant.workingHours[i]['day'];
+                        if (restaurant.workingHours[i]['timeslot'].length != 0) {
+                            for (j = 0; j < restaurant.workingHours[i]['timeslot'].length; j++) {
+                                $(".restaurant_discount_options_" + day + "_div").show();
+                                var timeslot = restaurant.workingHours[i]['timeslot'][j];
+
+                                var discount = restaurant.workingHours[i]['timeslot'][j]['discount'];
+                                var TimeslotHourVar = {'from': timeslot[`from`], 'to': timeslot[`to`]};
+                                if (day == 'Sunday') {
+                                    timeslotworkSunday.push(TimeslotHourVar);
+                                } else if (day == 'Monday') {
+                                    timeslotworkMonday.push(TimeslotHourVar);
+                                } else if (day == 'Tuesday') {
+                                    timeslotworkTuesday.push(TimeslotHourVar);
+                                } else if (day == 'Wednesday') {
+                                    timeslotworkWednesday.push(TimeslotHourVar);
+                                } else if (day == 'Thursday') {
+                                    timeslotworkThursday.push(TimeslotHourVar);
+                                } else if (day == 'Friday') {
+                                    timeslotworkFriday.push(TimeslotHourVar);
+                                } else if (day == 'Satuarday') {
+                                    timeslotworkSatuarday.push(TimeslotHourVar);
+                                }
+
+
+                                $('#working_hour_table_' + day + ' tr:last').after('<tr>' +
+                                    '<td class="" style="width:50%;"><input type="time" class="form-control ' + i + '_' + j + '_row" value="' + timeslot[`from`] + '" id="from' + day + j + i + '" ></td>' +
+                                    '<td class="" style="width:50%;"><input type="time" class="form-control ' + i + '_' + j + '_row" value="' + timeslot[`to`] + '" id="to' + day + j + i + '" ></td>' +
+                                    '<td class="action-btn" style="width:20%;">' +
+                                    '<button type="button" class="btn btn-primary ' + i + '_' + j + '_row workingHours_' + i + '_' + j + '"  onclick="updatehoursFunctionButton(`' + day + '`,`' + j + '`,`' + i + '`)" ><i class="fa fa-edit"></i></button>' +
+                                    '&nbsp;&nbsp;<button type="button" class="btn btn-primary ' + i + '_' + j + '_row" onclick="deleteWorkingHour(`' + day + '`,`' + j + '`,`' + i + '`)" ><i class="fa fa-trash"></i></button>' +
+                                    '</td></tr>');
+
+
+                            }
+                            $('.working_hours_div').css('display','block');
+                        }
+                    }
+                }
       jQuery("#data-table_processing").hide();
       disableClick();
     })
+    async function getRestaurantStory(restaurantId) {
+                await database.collection('story').where('vendorID', '==', restaurantId).get().then(async function (snapshots) {
+
+                    if (snapshots.docs.length > 0) {
+
+                        var story_data = snapshots.docs[0].data();
+
+                        story_vedios = story_data.videoUrl;
+                        story_thumbnail = story_data.videoThumbnail;
+
+                    }
+                });
+            }
 
 })
 
@@ -809,15 +1524,15 @@ $(".save_restaurant_btn").click(function(){
   if($("#is_open").is(':checked')){
     reststatus =true;
   }
-  var opentime = $("#opentime").val();
-  var opentime_val = $("#opentime").val();
+//   var opentime = $("#opentime").val();
+//   var opentime_val = $("#opentime").val();
 
-  if(opentime){
-   opentime=new Date('1970-01-01T' + opentime + 'Z')
-   .toLocaleTimeString('en-US',
-    {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
-    );
- }
+//   if(opentime){
+//    opentime=new Date('1970-01-01T' + opentime + 'Z')
+//    .toLocaleTimeString('en-US',
+//     {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+//     );
+//  }
 
  var openDineTime = $("#openDineTime").val();
  var openDineTime_val = $("#openDineTime").val();
@@ -829,14 +1544,14 @@ $(".save_restaurant_btn").click(function(){
     );
  }
 
- var closetime = $("#closetime").val();
- var closetime_val = $("#closetime").val();
- if(closetime){
-   closetime=new Date('1970-01-01T' + closetime + 'Z')
-   .toLocaleTimeString('en-US',
-    {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
-    );
- }
+//  var closetime = $("#closetime").val();
+//  var closetime_val = $("#closetime").val();
+//  if(closetime){
+//    closetime=new Date('1970-01-01T' + closetime + 'Z')
+//    .toLocaleTimeString('en-US',
+//     {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
+//     );
+//  }
 
  var closeDineTime = $("#closeDineTime").val();
  var closeDineTime_val = $("#closeDineTime").val();
@@ -846,6 +1561,43 @@ $(".save_restaurant_btn").click(function(){
     {timeZone:'UTC',hour12:true,hour:'numeric',minute:'numeric'}
     );
  } 
+
+ var specialDiscount = [];
+
+var sunday = {'day': 'Sunday', 'timeslot': timeslotSunday};
+var monday = {'day': 'Monday', 'timeslot': timeslotMonday};
+var tuesday = {'day': 'Tuesday', 'timeslot': timeslotTuesday};
+var wednesday = {'day': 'Wednesday', 'timeslot': timeslotWednesday};
+var thursday = {'day': 'Thursday', 'timeslot': timeslotThursday};
+var friday = {'day': 'Friday', 'timeslot': timeslotFriday};
+var satuarday = {'day': 'Satuarday', 'timeslot': timeslotSatuarday};
+
+specialDiscount.push(monday);
+specialDiscount.push(tuesday);
+specialDiscount.push(wednesday);
+specialDiscount.push(thursday);
+specialDiscount.push(friday);
+specialDiscount.push(satuarday);
+specialDiscount.push(sunday);
+
+
+var workingHours = [];
+
+var sunday = {'day': 'Sunday', 'timeslot': timeslotworkSunday};
+var monday = {'day': 'Monday', 'timeslot': timeslotworkMonday};
+var tuesday = {'day': 'Tuesday', 'timeslot': timeslotworkTuesday};
+var wednesday = {'day': 'Wednesday', 'timeslot': timeslotworkWednesday};
+var thursday = {'day': 'Thursday', 'timeslot': timeslotworkThursday};
+var friday = {'day': 'Friday', 'timeslot': timeslotworkFriday};
+var satuarday = {'day': 'Satuarday', 'timeslot': timeslotworkSatuarday};
+
+workingHours.push(monday);
+workingHours.push(tuesday);
+workingHours.push(wednesday);
+workingHours.push(thursday);
+workingHours.push(friday);
+workingHours.push(satuarday);
+workingHours.push(sunday);
 
  coordinates= new firebase.firestore.GeoPoint(latitude,longitude);
 
@@ -885,6 +1637,8 @@ if($("#Vegetarian_Friendly").is(':checked')){
 }
 
 var filters_new={"Free Wi-Fi":Free_Wi_Fi,"Good for Breakfast":Good_for_Breakfast,"Good for Dinner":Good_for_Dinner,"Good for Lunch":Good_for_Lunch,"Live Music":Live_Music,"Outdoor Seating":Outdoor_Seating,"Takes Reservations":Takes_Reservations,"Vegetarian Friendly":Vegetarian_Friendly};
+
+
 
 if(userFirstName == ''){
   $(".error_top").show();
@@ -948,21 +1702,21 @@ if(userFirstName == ''){
   $(".error_top").html("");
   $(".error_top").append("<p>{{trans('lang.restaurant_description_error')}}</p>");
   window.scrollTo(0, 0);
-}else if(opentime == ''){
-  $(".error_top").show();
-  $(".error_top").html("");
-  $(".error_top").append("<p>{{trans('lang.restaurant_opentime_error')}}</p>");
-  window.scrollTo(0, 0);
-}else if(closetime == ''){
-  $(".error_top").show();
-  $(".error_top").html("");
-  $(".error_top").append("<p>{{trans('lang.restaurant_closetime_error')}}</p>");
-  window.scrollTo(0, 0);
-}else if(opentime_val > closetime_val ){
-  $(".error_top").show();
-  $(".error_top").html("");
-  $(".error_top").append("<p>{{trans('lang.restaurant_opentime_closetime_error')}}</p>");
-  window.scrollTo(0, 0);
+// }else if(opentime == ''){
+//   $(".error_top").show();
+//   $(".error_top").html("");
+//   $(".error_top").append("<p>{{trans('lang.restaurant_opentime_error')}}</p>");
+//   window.scrollTo(0, 0);
+// }else if(closetime == ''){
+//   $(".error_top").show();
+//   $(".error_top").html("");
+//   $(".error_top").append("<p>{{trans('lang.restaurant_closetime_error')}}</p>");
+//   window.scrollTo(0, 0);
+// }else if(opentime_val > closetime_val ){
+//   $(".error_top").show();
+//   $(".error_top").html("");
+//   $(".error_top").append("<p>{{trans('lang.restaurant_opentime_closetime_error')}}</p>");
+//   window.scrollTo(0, 0);
 }else{
 
  var bankName=$("#bankName").val();
@@ -988,235 +1742,830 @@ database.collection('users').doc(ownerId).update({'firstName':userFirstName,'las
 
 
  geoFirestore.collection('vendors').doc(id).update({'title':restaurantname,'description':description,'latitude':latitude,
-  'longitude':longitude,'location':address,'photo':restaurantPhoto,'photos':restaurnt_photos,'categoryID':cuisines,'phonenumber':phonenumber,'categoryTitle':categoryTitle,'coordinates':coordinates,'filters':filters_new,'closetime':closetime,'opentime':opentime,'reststatus':reststatus,'authorName':userFirstName,'enabledDiveInFuture':enabledDiveInFuture,'restaurantMenuPhotos':restaurant_menu_photos,'restaurantCost':restaurantCost,'openDineTime':openDineTime,'closeDineTime':closeDineTime,'DeliveryCharge':DeliveryCharge}).then(function(result) {
-    window.location.href = '{{ route("user.profile")}}';
+  'longitude':longitude,'location':address,'photo':restaurantPhoto,'photos':restaurnt_photos,'categoryID':cuisines,
+  'phonenumber':phonenumber,'categoryTitle':categoryTitle,'coordinates':coordinates,'filters':filters_new,'reststatus':reststatus,
+  'authorName':userFirstName,'enabledDiveInFuture':enabledDiveInFuture,'restaurantMenuPhotos':restaurant_menu_photos,
+  'restaurantCost':restaurantCost,'openDineTime':openDineTime,'closeDineTime':closeDineTime,'DeliveryCharge':DeliveryCharge,
+   'specialDiscount': specialDiscount, 'workingHours': workingHours}).then(function(result) {
+    if(story_vedios.length > 0 || story_thumbnail != ''){
+                        	
+                          if(story_vedios.length > 0 && story_thumbnail == ''){
+                        $(".error_top").show();
+                          $(".error_top").html("");
+                          $(".error_top").append("<p>{{trans('lang.story_error')}}</p>");
+                          window.scrollTo(0, 0);
+                      }else if(story_thumbnail && story_vedios.length == 0){
+                        $(".error_top").show();
+                          $(".error_top").html("");
+                          $(".error_top").append("<p>{{trans('lang.story_error')}}</p>");
+                          window.scrollTo(0, 0);	
+                      }else{
+                
+                database.collection('story').doc(id).set({
+                                  'createdAt': new Date(),
+                                  'vendorID': id,
+                                  'videoThumbnail': story_thumbnail,
+                                  'videoUrl': story_vedios,
+                              }).then(function (result) {
+                                  window.location.href = '{{ route("user.profile")}}';
+                              });
+                      }	
+                            
+                          }else{
+                            window.location.href = '{{ route("user.profile")}}';
+                          }
+                          
+    
   });
 })
+         
 }
 
 })
 
 })
 
+function handleStoryFileSelect(evt) {
+            var f = evt.target.files[0];
+            var reader = new FileReader();
+            var isVideo= document.getElementById('video_file');
+            var videoValue= isVideo.value;
+            var allowedExtensions =/(\.mp4)$/i;;
+             
+            if (!allowedExtensions.exec(videoValue)) {
+                $(".error_top").show();
+				    $(".error_top").html("");
+				    $(".error_top").append("<p>Error: Invalid video type</p>");
+				    window.scrollTo(0, 0);
+                    isVideo.value = '';
+                return false;
+            }
+        
+        	var video = document.createElement('video');
+		    video.preload = 'metadata';
+		    video.onloadedmetadata = function() {
+		    window.URL.revokeObjectURL(video.src);
+         
+		    	if (video.duration > storevideoDuration){
+		            $(".error_top").show();
+				    $(".error_top").html("");
+				    $(".error_top").append("<p>Error: Story video duration maximum allow to "+story_video_duration+" seconds</p>");
+				    window.scrollTo(0, 0);
+		            evt.target.value = '';
+		            return false;
+		        }
+		        
+		        $(".error_top").html("");
+		        reader.onload = (function (theFile) {
+                
+	                return function (e) {
+	
+	                    var filePayload = e.target.result;
+	                    var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
+	                    var val = f.name;
+	                    var ext = val.split('.')[1];
+	                    var docName = val.split('fakepath')[1];
+	                    var filename = (f.name).replace(/C:\\fakepath\\/i, '')
+	
+	                    var timestamp = Number(new Date());
+	                    var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
+	
+	                    var uploadTask = storyRef.child(filename).put(theFile);
+	                    
+						uploadTask.on('state_changed', function (snapshot) {
+		
+	                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+	                        console.log('Upload is ' + progress + '% done');
+	                        jQuery("#uploding_story_video").text("video is uploading...");
+	                    
+	                    }, function (error) {
+	                    }, function () {
+	                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                            jQuery("#uploding_story_video").text("Upload is completed");
+	                            setTimeout(function(){jQuery("#uploding_story_video").empty();},3000);
+	                            
+	                            var nextCount = $("#story_vedios").children().length;
+								html = '<div class="col-md-3" id="story_div_' + nextCount + '">\n' +
+	                                '<div class="video-inner"><video width="320px" height="240px"\n' +
+	                                '                                   controls="controls">\n' +
+	                                '                            <source src="' + downloadURL + '"\n' +
+	                                '            type="video/mp4"></video><span class="remove-story-video" data-id="'+nextCount+'" data-img="'+downloadURL+'"><i class="fa fa-remove"></i></span></div></div>';
+	
+	                            jQuery("#story_vedios").append(html);
+	                            story_vedios.push(downloadURL);
+	                            $("#video_file").val('');
+	                        });
+	                    });
+	                };
+	            })(f);
+	            
+	            reader.readAsDataURL(f);
+		    }
+		    video.src = URL.createObjectURL(f);
+		}
+        $(document).on("click", ".remove-story-video", function () {
+          var id = $(this).attr('data-id');
+            var photo_remove = $(this).attr('data-img');
+            firebase.storage().refFromURL(photo_remove).delete();
+            $("#story_div_" + id).remove();
+            index = story_vedios.indexOf(photo_remove);
+            $("#video_file").val('');
+            if (index > -1) {
+                story_vedios.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            
+            var newhtml = '';
+            if(story_vedios.length > 0){
+	            for (var i = 0; i < story_vedios.length; i++) {
+	            	//var nextCount = i + 1;
+	            	newhtml += '<div class="col-md-3" id="story_div_' + i + '">\n' +
+	                    '<div class="video-inner"><video width="320px" height="240px"\n' +
+	                    'controls="controls">\n' +
+	                    '<source src="' + story_vedios[i] + '"\n' +
+	                    'type="video/mp4"></video><span class="remove-story-video" data-id="'+i+'" data-img="'+story_vedios[i]+'"><i class="fa fa-remove"></i></span></div></div>';
+	            }
+            }
+            jQuery("#story_vedios").html(newhtml);
+            deleteStoryfromCollection();
+        });
 
+        $(document).on("click", ".remove-story-thumbnail", function () {
+			var photo_remove = $(this).attr('data-img');
+            firebase.storage().refFromURL(photo_remove).delete();
+            $("#story_thumbnail").empty();
+            story_thumbnail = '';
+            deleteStoryfromCollection();
+        });
 
-$(document).on("click",".remove-photo-btn",function() {
-  var id=$(this).attr('data-id');
-  var photo_remove=$(this).attr('data-img');
-  $("#photo_"+id).remove();
-  index = restaurnt_photos.indexOf(photo_remove);
-  if (index > -1) {
-                  restaurnt_photos.splice(index, 1); // 2nd parameter means remove one item only
-                }
-
-              });
-
-$(document).on("click",".remove-menu-btn",function() {
-  var id=$(this).attr('data-id');
-  var photo_remove=$(this).attr('data-img');
-  $("#photo_menu"+id).remove();
-  index = restaurant_menu_photos.indexOf(photo_remove);
-  if (index > -1) {
-          restaurant_menu_photos.splice(index, 1); // 2nd parameter means remove one item only
+		function deleteStoryfromCollection(){
+			 if(story_vedios.length == 0 && story_thumbnail == ''){
+        		database.collection('story').where('vendorID','==',id).get().then(async function (snapshot) {
+        			if(snapshot.docs.length > 0){
+        				database.collection('story').doc(id).delete();		
+        			}
+        		});
+        	}
         }
-
-      });
-
-function removeImage(photo_remove,photocount) {
-
-  $("#photo_"+photocount).remove();
-  index = restaurnt_photos.indexOf(photo_remove);
-  if (index > -1) {
-              restaurnt_photos.splice(index, 1); // 2nd parameter means remove one item only
-            }
-          }
-
-          var storageRef = firebase.storage().ref('images');
+		
+        function handleStoryThumbnailFileSelect(evt) {
 
 
-          function handleFileSelect(evt,type) {
             var f = evt.target.files[0];
             var reader = new FileReader();
+            var fileInput =
+                document.getElementById('file');
+             
+            var filePath = fileInput.value;
+         
+            // Allowing file type
+            var allowedExtensions =/(\.jpg|\.jpeg|\.png|\.gif)$/i;;
+             
+            if (!allowedExtensions.exec(filePath)) {
+                $(".error_top").show();
+				    $(".error_top").html("");
+				    $(".error_top").append("<p>Error: Invalid File type</p>");
+				    window.scrollTo(0, 0);
+                fileInput.value = '';
+                return false;
+            }
+        
 
-            new Compressor(f, {
-              quality: <?php echo env('IMAGE_COMPRESSOR_QUALITY',0.8); ?>,
-              success(result) {
-                f=result;
-
-                reader.onload = (function(theFile) {
-                  return function(e) {
+            reader.onload = (function (theFile) {
+                return function (e) {
 
                     var filePayload = e.target.result;
                     var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
-                    var val =f.name;       
-                    var ext=val.split('.')[1];
-                    var docName=val.split('fakepath')[1];
+                    var val = f.name;
+                    var ext = val.split('.')[1];
+                    var docName = val.split('fakepath')[1];
                     var filename = (f.name).replace(/C:\\fakepath\\/i, '')
 
-                    var timestamp = Number(new Date());      
-                    var uploadTask = storageRef.child(filename).put(theFile);
+                    var timestamp = Number(new Date());
+                    var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
+
+                    var uploadTask = storyImagesRef.child(filename).put(theFile);
                     console.log(uploadTask);
-                    uploadTask.on('state_changed', function(snapshot){
 
-                      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                      console.log('Upload is ' + progress + '% done');
-                      if(type=="photo"){
-                        jQuery("#uploding_image").text("Image is uploading...");  
-                      }else if(type=='vendor'){
-                       jQuery("#uploding_image_owner").text("Image is uploading...");
-                     }else{
-                      jQuery("#uploding_image_photos").text("Image is uploading...");
-                    }
+                    uploadTask.on('state_changed', function (snapshot) {
 
-                  }, function(error) {
-                  }, function() {
-                    uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-
-                      if(type=="photo"){
-                        jQuery("#uploding_image").text("Upload is completed");
-                      }else if(type=='vendor'){
-                       jQuery("#uploding_image_owner").text("Upload is completed");
-                     }else{
-                      jQuery("#uploding_image_photos").text("Upload is completed");
-                    }
-
-                    photo = downloadURL;
-                    if(type=="photo"){
-                      restaurantPhoto = downloadURL;
-                    }
-
-                    if(type == 'vendor'){
-
-                      ownerPhoto = downloadURL;
-                      restaurantOwnerPhoto = downloadURL;
-                      $("#uploaded_image_owner").attr('src',photo);
-                      $(".uploaded_image_owner").show();     
-                    }
-
-                    if(photo){
-                      if(type=='photo'){
-                        restaurantPhoto = photo;
-                        $("#uploaded_image").attr('src',photo);
-                        $(".uploaded_image").show();
-                      }else if(type=='photos'){
-
-                        photocount++;
-                        photos_html='<span class="image-item" id="photo_'+photocount+'"><span class="remove-btn remove-photo-btn" data-id="'+photocount+'" data-img="'+photo+'"><i class="fa fa-remove"></i></span><img width="100px" id="" height="auto" src="'+photo+'"></span>';
-                        $("#photos").append(photos_html);
-                        restaurnt_photos.push(photo);
-                      }
-                    }                
-
-                  });   
-                  });
-
-                  };
-                })(f);
-                reader.readAsDataURL(f);
-
-              },
-              error(err) {
-                console.log(err.message);
-              },
-            });
-
-          }  
-
-
-          async function getVendorId(vendorUser){
-            var vendorId = '';
-            var ref;
-            await database.collection('vendors').where('author',"==",vendorUser).get().then(async function(vendorSnapshots){
-              var vendorData = vendorSnapshots.docs[0].data();    
-              vendorId = vendorData.id;
-            })
-
-            return vendorId;
-          }
-
-          function disableClick(){
-            var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
-            if(is_disable_delete == 1){
-              jQuery(".change_user_password").addClass("alert_demo");
-              jQuery(".alert_demo").removeClass("change_user_password");       
-            }
-          }
-
-
-          $(document).on("click",".alert_demo", function (e) {
-            $('.error_top').hide();
-            alert("We can not allow to change password");
-          });
-
-          function handleFileSelectMenuCard(evt) {
-            var f = evt.target.files[0];
-            var reader = new FileReader();
-
-            new Compressor(f, {
-              quality: <?php echo env('IMAGE_COMPRESSOR_QUALITY',0.8); ?>,
-              success(result) {
-                f=result;
-
-                reader.onload = (function(theFile) {
-                  return function(e) {
-
-                    var filePayload = e.target.result;
-                    var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
-                    var val =f.name;       
-                    var ext=val.split('.')[1];
-                    var docName=val.split('fakepath')[1];
-                    var filename = (f.name).replace(/C:\\fakepath\\/i, '')
-
-                    var timestamp = Number(new Date());      
-                    var uploadTask = storageRef.child(filename).put(theFile);
-                    console.log(uploadTask);
-                    uploadTask.on('state_changed', function(snapshot){
-
-                      var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                      console.log('Upload is ' + progress + '% done');
-
-                      jQuery("#uploaded_image_menu").text("Image is uploading...");
-
-
-                    }, function(error) {
-                    }, function() {
-                      uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-
-                        jQuery("#uploaded_image_menu").text("Upload is completed");
-
-                        photo = downloadURL;
-
-                        if(photo){
-
-                          menuPhotoCount++;
-                          photos_html='<span class="image-item" id="photo_menu'+menuPhotoCount+'"><span class="remove-btn remove-menu-btn" data-id="'+menuPhotoCount+'" data-img="'+photo+'"><i class="fa fa-remove"></i></span><img width="100px" id="" height="auto" src="'+photo+'"></span>';
-                          $("#photos_menu_card").append(photos_html);
-                          restaurant_menu_photos.push(photo);
-                        }
-
-
-                      });   
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        jQuery("#uploding_story_thumbnail").text("Image is uploading...");
+                    }, function (error) {
+                    }, function () {
+                        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                          jQuery("#uploding_story_thumbnail").text("Upload is completed");
+                            setTimeout(function(){jQuery("#uploding_story_thumbnail").empty();},3000);
+                            var html = '<div class="col-md-3"><div class="thumbnail-inner"><span class="remove-story-thumbnail" data-img="'+downloadURL+'"><i class="fa fa-remove"></i></span><img id="story_thumbnail_image" src="' + downloadURL + '" width="150px" height="150px;"></div></div>';
+                            jQuery("#story_thumbnail").html(html);
+                            story_thumbnail = downloadURL;
+                            $("#file").val('');
+                        });
                     });
 
-                  };
+                };
+            })(f);
+            reader.readAsDataURL(f);
+        }
+
+
+	$(document).on("click",".remove-photo-btn",function() {
+		  var id=$(this).attr('data-id');
+		  var photo_remove=$(this).attr('data-img');
+		  firebase.storage().refFromURL(photo_remove).delete();
+		  $("#photo_"+id).remove();
+		  index = restaurnt_photos.indexOf(photo_remove);
+		  if (index > -1) {
+		    restaurnt_photos.splice(index, 1); // 2nd parameter means remove one item only
+		  }
+	});
+
+	$(document).on("click",".remove-menu-btn",function() {
+		  var id=$(this).attr('data-id');
+		  var photo_remove=$(this).attr('data-img');
+		  firebase.storage().refFromURL(photo_remove).delete();
+		  $("#photo_menu"+id).remove();
+		  index = restaurant_menu_photos.indexOf(photo_remove);
+		  if (index > -1) {
+		     restaurant_menu_photos.splice(index, 1); // 2nd parameter means remove one item only
+		   }
+	});
+
+      function handleFileSelect(evt,type) {
+        
+        var f = evt.target.files[0];
+        var reader = new FileReader();
+        
+        new Compressor(f, {
+          quality: <?php echo env('IMAGE_COMPRESSOR_QUALITY',0.8); ?>,
+          success(result) {
+            f=result;
+
+            reader.onload = (function(theFile) {
+              return function(e) {
+
+                var filePayload = e.target.result;
+                var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
+                var val =f.name;       
+                var ext=val.split('.')[1];
+                var docName=val.split('fakepath')[1];
+                var filename = (f.name).replace(/C:\\fakepath\\/i, '')
+                
+                var timestamp = Number(new Date());
+                var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
+                      
+                var uploadTask = storageRef.child(filename).put(theFile);
+                
+                console.log(uploadTask);
+                uploadTask.on('state_changed', function(snapshot){
+
+                  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  console.log('Upload is ' + progress + '% done');
+                  if(type=="photo"){
+                    jQuery("#uploding_image").text("Image is uploading...");  
+                  }else if(type=='vendor'){
+                   jQuery("#uploding_image_owner").text("Image is uploading...");
+                 }else{
+                  jQuery("#uploding_image_photos").text("Image is uploading...");
+                }
+
+              }, function(error) {
+              }, function() {
+                uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+
+                  if(type=="photo"){
+                    jQuery("#uploding_image").text("Upload is completed");
+                  }else if(type=='vendor'){
+                   jQuery("#uploding_image_owner").text("Upload is completed");
+                 }else{
+                  jQuery("#uploding_image_photos").text("Upload is completed");
+                }
+
+                photo = downloadURL;
+                if(type=="photo"){
+                  restaurantPhoto = downloadURL;
+                }
+
+                if(type == 'vendor'){
+
+                  ownerPhoto = downloadURL;
+                  restaurantOwnerPhoto = downloadURL;
+                  $("#uploaded_image_owner").attr('src',photo);
+                  $(".uploaded_image_owner").show();     
+                }
+
+                if(photo){
+                  if(type=='photo'){
+                    restaurantPhoto = photo;
+                    $("#uploaded_image").attr('src',photo);
+                    $(".uploaded_image").show();
+                  }else if(type=='photos'){
+
+                    photocount++;
+                    photos_html='<span class="image-item" id="photo_'+photocount+'"><span class="remove-btn remove-photo-btn" data-id="'+photocount+'" data-img="'+photo+'"><i class="fa fa-remove"></i></span><img width="100px" id="" height="auto" src="'+photo+'"></span>';
+                    $("#photos").append(photos_html);
+                    restaurnt_photos.push(photo);
+                    
+                  }
+                }                
+
+              });   
+              });
+
+              };
+            })(f);
+            reader.readAsDataURL(f);
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
+
+      }  
+      function handleFileSelectowner(evt) {
+        var f = evt.target.files[0];
+        var reader = new FileReader();
+
+        new Compressor(f, {
+            quality: <?php echo env('IMAGE_COMPRESSOR_QUALITY', 0.8); ?>,
+            success(result) {
+                f = result;
+                reader.onload = (function (theFile) {
+                    return function (e) {
+                        var filePayload = e.target.result;
+                        var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
+                        var val = f.name;
+                        var ext = val.split('.')[1];
+                        var docName = val.split('fakepath')[1];
+                        var filename = (f.name).replace(/C:\\fakepath\\/i, '')
+
+                        var timestamp = Number(new Date());
+                        var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
+                        
+                        var uploadTask = storageRef.child(filename).put(theFile);
+                        uploadTask.on('state_changed', function (snapshot) {
+
+                            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                            jQuery("#uploding_image_owner").text("Image is uploading...");
+                        }, function (error) {
+                        }, function () {
+                            uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+                                jQuery("#uploding_image_owner").text("Upload is completed");
+                                ownerphoto = downloadURL;
+                                $("#uploaded_image_owner").attr('src', ownerphoto);
+                                $(".uploaded_image_owner").show();
+
+                            });
+                        });
+
+                    };
                 })(f);
                 reader.readAsDataURL(f);
-
-              },
-              error(err) {
+            },
+            error(err) {
                 console.log(err.message);
-              },
-            });
+            },
+        });
+    }
 
-          } 
 
-          $("#dine_in_feature").change(function() {
-            if(this.checked) {
-              $(".divein_div").show();
-            }else{
-              $(".divein_div").hide();
+
+      async function getVendorId(vendorUser){
+        var vendorId = '';
+        var ref;
+        await database.collection('vendors').where('author',"==",vendorUser).get().then(async function(vendorSnapshots){
+          var vendorData = vendorSnapshots.docs[0].data();    
+          vendorId = vendorData.id;
+        })
+
+        return vendorId;
+      }
+
+      function disableClick(){
+        var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
+        if(is_disable_delete == 1){
+          jQuery(".change_user_password").addClass("alert_demo");
+          jQuery(".alert_demo").removeClass("change_user_password");       
+        }
+      }
+
+
+      $(document).on("click",".alert_demo", function (e) {
+        $('.error_top').hide();
+        alert("We can not allow to change password");
+      });
+
+      function handleFileSelectMenuCard(evt) {
+        var f = evt.target.files[0];
+        var reader = new FileReader();
+
+        new Compressor(f, {
+          quality: <?php echo env('IMAGE_COMPRESSOR_QUALITY',0.8); ?>,
+          success(result) {
+            f=result;
+
+            reader.onload = (function(theFile) {
+              return function(e) {
+
+                var filePayload = e.target.result;
+                var hash = CryptoJS.SHA256(Math.random() + CryptoJS.SHA256(filePayload));
+                var val =f.name;       
+                var ext=val.split('.')[1];
+                var docName=val.split('fakepath')[1];
+                var filename = (f.name).replace(/C:\\fakepath\\/i, '')
+
+                var timestamp = Number(new Date());
+                var filename = filename.split('.')[0] + "_" + timestamp + '.' + ext;
+                      
+                var uploadTask = storageRef.child(filename).put(theFile);
+                console.log(uploadTask);
+                uploadTask.on('state_changed', function(snapshot){
+
+                  var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                  console.log('Upload is ' + progress + '% done');
+
+                  jQuery("#uploaded_image_menu").text("Image is uploading...");
+
+
+                }, function(error) {
+                }, function() {
+                  uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+
+                    jQuery("#uploaded_image_menu").text("Upload is completed");
+
+                    photo = downloadURL;
+
+                    if(photo){
+
+                      menuPhotoCount++;
+                      photos_html='<span class="image-item" id="photo_menu'+menuPhotoCount+'"><span class="remove-btn remove-menu-btn" data-id="'+menuPhotoCount+'" data-img="'+photo+'"><i class="fa fa-remove"></i></span><img width="100px" id="" height="auto" src="'+photo+'"></span>';
+                      $("#photos_menu_card").append(photos_html);
+                      restaurant_menu_photos.push(photo);
+                    }
+
+
+                  });   
+                });
+
+              };
+            })(f);
+            reader.readAsDataURL(f);
+
+          },
+          error(err) {
+            console.log(err.message);
+          },
+        });
+
+      } 
+
+      $("#dine_in_feature").change(function() {
+        if(this.checked) {
+          $(".divein_div").show();
+        }else{
+          $(".divein_div").hide();
+        }
+      });
+
+
+      $(".add_special_offer_restaurant_btn").click(function () {
+        if(specialDiscountOfferisEnable){
+    		$(".special_offer_div").show();
+    	}else{
+    		alert("{{trans('lang.special_offer_disabled')}}");
+    		return false;
+        }
+    })
+
+    var countAddButton = 1;
+
+    function addMoreButton(day, day2, count) {
+        count = countAddButton;
+        $(".restaurant_discount_options_" + day + "_div").show();
+        //  $(".restaurant_opentime_options_"+day).append('<input type="time" class="form-control" id="openTime'+day+'">');
+        // $(".restaurant_closetime_options_"+day).append('<input type="time" class="form-control" id="closeTime'+day+'"  >');
+        // $(".restaurant_discount_options_"+day).append('<input type="number" class="form-control" id="discount'+day+'">');
+        // $(".restaurant_action_options_"+day+"_div").append('<button type="button" class="btn btn-primary save_option_day_button'+day+'" onclick="addMoreFunctionButton(`'+day2+'`,`'+day+'`)" >Save</button>');
+
+        $('#special_offer_table_' + day + ' tr:last').after('<tr>' +
+            '<td class="" style="width:10%;"><input type="time" class="form-control" id="openTime' + day + count + '"></td>' +
+            '<td class="" style="width:10%;"><input type="time" class="form-control" id="closeTime' + day + count + '"></td>' +
+            '<td class="" style="width:30%;">' +
+            '<input type="number" class="form-control" id="discount' + day + count + '" style="width:60%;">' +
+            '<select id="discount_type' + day + count + '" class="form-control" style="width:40%;"><option value="percentage"/>%</option><option value="amount"/>' + currentCurrency + '</option></select>' +
+            '</td>' +
+            '<td style="width:30%;"><select id="type' + day + count + '" class="form-control"><option value="delivery"/>Delivery Discount</option></select></td>' +
+            '<td class="action-btn" style="width:20%;">' +
+            '<button type="button" class="btn btn-primary save_option_day_button' + day + count + '" onclick="addMoreFunctionButton(`' + day2 + '`,`' + day + '`,' + countAddButton + ')" style="width:62%;">Save</button>' +
+            '</td></tr>');
+        countAddButton++;
+
+    }
+
+    function deleteOffer(day, count, i) {
+        $('.' + i + '_' + count + '_row').hide();
+        if (day == 'Sunday') {
+            timeslotSunday.splice(count, 1);
+        } else if (day == 'Monday') {
+            timeslotMonday.splice(count, 1);
+        } else if (day == 'Tuesday') {
+            timeslotTuesday.splice(count, 1);
+        } else if (day == 'Wednesday') {
+            timeslotWednesday.splice(count, 1);
+        } else if (day == 'Thursday') {
+            timeslotThursday.splice(count, 1);
+        } else if (day == 'Friday') {
+            timeslotFriday.splice(count, 1);
+        } else if (day == 'Satuarday') {
+            timeslotSatuarday.splice(count, 1);
+        }
+
+        var specialDiscount = [];
+        var sunday = {'day': 'Sunday', 'timeslot': timeslotSunday};
+        var monday = {'day': 'Monday', 'timeslot': timeslotMonday};
+        var tuesday = {'day': 'Tuesday', 'timeslot': timeslotTuesday};
+        var wednesday = {'day': 'Wednesday', 'timeslot': timeslotWednesday};
+        var thursday = {'day': 'Thursday', 'timeslot': timeslotThursday};
+        var friday = {'day': 'Friday', 'timeslot': timeslotFriday};
+        var satuarday = {'day': 'Satuarday', 'timeslot': timeslotSatuarday};
+
+        specialDiscount.push(monday);
+        specialDiscount.push(tuesday);
+        specialDiscount.push(wednesday);
+        specialDiscount.push(thursday);
+        specialDiscount.push(friday);
+        specialDiscount.push(satuarday);
+        specialDiscount.push(sunday);
+
+
+        database.collection('vendors').doc(id).update({'specialDiscount': specialDiscount}).then(function (result) {
+
+        });
+    }
+
+    function addMoreFunctionButton(day1, day2, count) {
+        var discount = $("#discount" + day2 + count).val();
+        var discount_type = $('#discount_type' + day2 + count).val();
+        var type = $('#type' + day2 + count).val();
+        var closeTime = $("#closeTime" + day2 + count).val();
+        var openTime = $("#openTime" + day2 + count).val();
+        if (discount == "" && closeTime == '' && openTime == '') {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid time or discount</p>");
+            window.scrollTo(0, 0);
+        } else if (discount > 100 || discount == 0) {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid discount</p>");
+            window.scrollTo(0, 0);
+        } else {
+
+            var timeslotVar = {
+                'discount': discount,
+                'from': openTime,
+                'to': closeTime,
+                'type': discount_type,
+                'discount_type': type
+            };
+            console.log(timeslotVar);
+
+            if (day1 == 'sunday') {
+                timeslotSunday.push(timeslotVar);
+            } else if (day1 == 'monday') {
+                timeslotMonday.push(timeslotVar);
+            } else if (day1 == 'tuesday') {
+                timeslotTuesday.push(timeslotVar);
+            } else if (day1 == 'wednesday') {
+                timeslotWednesday.push(timeslotVar);
+            } else if (day1 == 'thursday') {
+                timeslotThursday.push(timeslotVar);
+            } else if (day1 == 'friday') {
+                timeslotFriday.push(timeslotVar);
+            } else if (day1 == 'satuarday') {
+                timeslotSatuarday.push(timeslotVar);
             }
-          });
 
-        </script>
-        @endsection
+            /*$("#discount"+day2+"").remove();
+            $("#discount_type"+day2+"").remove();
+            $("#closeTime"+day2+"").remove();
+            $("#openTime"+day2+"").remove();*/
+            $(".save_option_day_button" + day2 + count).hide();
+            $("#discount" + day2 + count).attr('disabled', "true");
+            $("#discount_type" + day2 + count).attr('disabled', "true");
+            $("#type" + day2 + count).attr('disabled', "true");
+            $("#closeTime" + day2 + count).attr('disabled', "true");
+            $("#openTime" + day2 + count).attr('disabled', "true");
+        }
+
+    }
+
+    function updateMoreFunctionButton(day, rowCount, dayCount) {
+        var discount = $("#discount" + day + rowCount + dayCount + "").val();
+        var discount_type = $('#discount_type' + day + rowCount + dayCount + "").val();
+        var type = $('#type' + day + rowCount + dayCount + "").val();
+        var closeTime = $("#closeTime" + day + rowCount + dayCount + "").val();
+        var openTime = $("#openTime" + day + rowCount + dayCount + "").val();
+        if (discount == "" && closeTime == '' && openTime == '') {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid time or discount</p>");
+            window.scrollTo(0, 0);
+        } else if (discount > 100 || discount == 0) {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid discount</p>");
+            window.scrollTo(0, 0);
+        } else {
+
+            var timeslotVar = {
+                'discount': discount,
+                'from': openTime,
+                'to': closeTime,
+                'type': discount_type,
+                'discount_type': type
+            };
+            if (day == 'Sunday') {
+                console.log(timeslotSunday[rowCount]);
+                timeslotSunday[rowCount] = timeslotVar;
+            } else if (day == 'Monday') {
+                console.log(timeslotMonday[rowCount]);
+                timeslotMonday[rowCount] = timeslotVar;
+
+            } else if (day == 'Tuesday') {
+
+                console.log(timeslotTuesday[rowCount]);
+                timeslotTuesday[rowCount] = timeslotVar;
+            } else if (day == 'Wednesday') {
+                console.log(timeslotWednesday[rowCount]);
+                timeslotWednesday[rowCount] = timeslotVar;
+
+
+            } else if (day == 'Thursday') {
+                console.log(timeslotThursday[rowCount]);
+                timeslotThursday[rowCount] = timeslotVar;
+
+            } else if (day == 'Friday') {
+                console.log(timeslotFriday[rowCount]);
+                timeslotFriday[rowCount] = timeslotVar;
+
+            } else if (day == 'Satuarday') {
+                console.log(timeslotSatuarday[rowCount]);
+                timeslotSatuarday[rowCount] = timeslotVar;
+            }
+        }
+
+    }
+
+
+    $(".add_working_hours_restaurant_btn").click(function () {
+        $(".working_hours_div").show();
+    })
+    var countAddhours = 1;
+
+    function addMorehour(day, day2, count) {
+        count = countAddhours;
+        $(".restaurant_discount_options_" + day + "_div").show();
+        //  $(".restaurant_opentime_options_"+day).append('<input type="time" class="form-control" id="openTime'+day+'">');
+        // $(".restaurant_closetime_options_"+day).append('<input type="time" class="form-control" id="closeTime'+day+'"  >');
+        // $(".restaurant_discount_options_"+day).append('<input type="number" class="form-control" id="discount'+day+'">');
+        // $(".restaurant_action_options_"+day+"_div").append('<button type="button" class="btn btn-primary save_option_day_button'+day+'" onclick="addMoreFunctionButton(`'+day2+'`,`'+day+'`)" >Save</button>');
+
+        $('#working_hour_table_' + day + ' tr:last').after('<tr>' +
+            '<td class="" style="width:50%;"><input type="time" class="form-control" id="from' + day + count + '"></td>' +
+            '<td class="" style="width:50%;"><input type="time" class="form-control" id="to' + day + count + '"></td>' +
+            '<td><button type="button" class="btn btn-primary save_option_day_button' + day + count + '" onclick="addMoreFunctionhour(`' + day2 + '`,`' + day + '`,' + countAddhours + ')" style="width:62%;"><i class="fa fa-save" title="Save""></i></button>' +
+            '</td></tr>');
+        countAddhours++;
+
+    }
+
+    function addMoreFunctionhour(day1, day2, count) {
+        var to = $("#to" + day2 + count).val();
+        var from = $("#from" + day2 + count).val();
+        if (to == '' && from == '') {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid time</p>");
+            window.scrollTo(0, 0);
+
+        } else {
+
+            var timeslotworkVar = {'from': from, 'to': to,};
+            console.log(timeslotworkVar);
+
+            if (day1 == 'sunday') {
+                timeslotworkSunday.push(timeslotworkVar);
+            } else if (day1 == 'monday') {
+                timeslotworkMonday.push(timeslotworkVar);
+            } else if (day1 == 'tuesday') {
+                timeslotworkTuesday.push(timeslotworkVar);
+            } else if (day1 == 'wednesday') {
+                timeslotworkWednesday.push(timeslotworkVar);
+            } else if (day1 == 'thursday') {
+                timeslotworkThursday.push(timeslotworkVar);
+            } else if (day1 == 'friday') {
+                timeslotworkFriday.push(timeslotworkVar);
+            } else if (day1 == 'satuarday') {
+                timeslotworkSatuarday.push(timeslotworkVar);
+            }
+
+            /*$("#discount"+day2+"").remove();
+            $("#discount_type"+day2+"").remove();
+            $("#closeTime"+day2+"").remove();
+            $("#openTime"+day2+"").remove();*/
+            $(".save_option_day_button" + day2 + count).hide();
+            $("#to" + day2 + count).attr('disabled', "true");
+            $("#from" + day2 + count).attr('disabled', "true");
+        }
+
+    }
+
+    function deleteWorkingHour(day, count, i) {
+        $('.' + i + '_' + count + '_row').hide();
+        if (day == 'Sunday') {
+            timeslotworkSunday.splice(count, 1);
+        } else if (day == 'Monday') {
+            timeslotworkMonday.splice(count, 1);
+        } else if (day == 'Tuesday') {
+            timeslotworkTuesday.splice(count, 1);
+        } else if (day == 'Wednesday') {
+            timeslotworkWednesday.splice(count, 1);
+        } else if (day == 'Thursday') {
+            timeslotworkThursday.splice(count, 1);
+        } else if (day == 'Friday') {
+            timeslotworkFriday.splice(count, 1);
+        } else if (day == 'Satuarday') {
+            timeslotworkSatuarday.splice(count, 1);
+        }
+
+        var workingHours = [];
+        var sunday = {'day': 'Sunday', 'timeslot': timeslotworkSunday};
+        var monday = {'day': 'Monday', 'timeslot': timeslotworkMonday};
+        var tuesday = {'day': 'Tuesday', 'timeslot': timeslotworkTuesday};
+        var wednesday = {'day': 'Wednesday', 'timeslot': timeslotworkWednesday};
+        var thursday = {'day': 'Thursday', 'timeslot': timeslotworkThursday};
+        var friday = {'day': 'Friday', 'timeslot': timeslotworkFriday};
+        var satuarday = {'day': 'Satuarday', 'timeslot': timeslotworkSatuarday};
+
+        workingHours.push(monday);
+        workingHours.push(tuesday);
+        workingHours.push(wednesday);
+        workingHours.push(thursday);
+        workingHours.push(friday);
+        workingHours.push(satuarday);
+        workingHours.push(sunday);
+
+
+        database.collection('vendors').doc(id).update({'workingHours': workingHours}).then(function (result) {
+
+        });
+    }
+
+    function updatehoursFunctionButton(day, rowCount, dayCount) {
+        var to = $("#to" + day + rowCount + dayCount + "").val();
+        var from = $("#from" + day + rowCount + dayCount + "").val();
+        if (to == '' && from == '') {
+            $(".error_top").show();
+            $(".error_top").html("");
+            $(".error_top").append("<p>Please Enter valid time </p>");
+            window.scrollTo(0, 0);
+
+        } else {
+
+            var timeslotworkVar = {'from': from, 'to': to};
+            if (day == 'Sunday') {
+                console.log(timeslotworkSunday[rowCount]);
+                timeslotworkSunday[rowCount] = timeslotworkVar;
+            } else if (day == 'Monday') {
+                console.log(timeslotworkMonday[rowCount]);
+                timeslotworkMonday[rowCount] = timeslotworkVar;
+
+            } else if (day == 'Tuesday') {
+
+                console.log(timeslotworkTuesday[rowCount]);
+                timeslotworkTuesday[rowCount] = timeslotworkVar;
+            } else if (day == 'Wednesday') {
+                console.log(timeslotworkWednesday[rowCount]);
+                timeslotworkWednesday[rowCount] = timeslotworkVar;
+
+
+            } else if (day == 'Thursday') {
+                console.log(timeslotworkThursday[rowCount]);
+                timeslotworkThursday[rowCount] = timeslotworkVar;
+
+            } else if (day == 'Friday') {
+                console.log(timeslotworkFriday[rowCount]);
+                timeslotworkFriday[rowCount] = timeslotworkVar;
+
+            } else if (day == 'Satuarday') {
+                console.log(timeslotworkSatuarday[rowCount]);
+                timeslotworkSatuarday[rowCount] = timeslotworkVar;
+            }
+        }
+
+    }
+</script>
+
+@endsection

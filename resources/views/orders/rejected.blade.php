@@ -58,12 +58,15 @@ error_reporting(E_ALL ^ E_NOTICE);
                                 <div class="table-responsive m-t-10">
 
 
-                                    <table id="example24" class="display nowrap table table-hover table-striped table-bordered table table-striped" cellspacing="0" width="100%">
+                                    <table id="orderTable" class="display nowrap table table-hover table-striped table-bordered table table-striped" cellspacing="0" width="100%">
 
                                         <thead>
 
                                             <tr>
-
+                                            <th class="delete-all"><input type="checkbox" id="is_active"><label
+                                                class="col-3 control-label" for="is_active">
+                                                <a id="deleteAll" class="do_not_delete" href="javascript:void(0)">
+                                                <i class="fa fa-trash"></i> {{trans('lang.all')}}</a></label></th>
                                                 <th>{{trans('lang.order_id')}}</th>
 
                                                 <th>{{trans('lang.order_user_id')}}</th>
@@ -136,11 +139,17 @@ error_reporting(E_ALL ^ E_NOTICE);
 
     var currentCurrency ='';
     var currencyAtRight = false;
+    var decimal_degits = 0;
+
     var refCurrency = database.collection('currencies').where('isActive', '==' , true);
     refCurrency.get().then( async function(snapshots){
         var currencyData = snapshots.docs[0].data();
         currentCurrency = currencyData.symbol;
         currencyAtRight = currencyData.symbolAtRight;
+
+        if (currencyData.decimal_degits) {
+                decimal_degits = currencyData.decimal_degits;
+            }
     });
 
     $(document).ready(function() {
@@ -214,7 +223,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 
                 var printRoute =  '{{route("vendors.orderprint",":id")}}';
                 printRoute = printRoute.replace(':id', id);
-            
+                html = html + '<td class="delete-all"><input type="checkbox" id="is_open_' + id + '" class="is_open" dataId="' + id + '"><label class="col-3 control-label"\n' +
+                'for="is_open_' + id + '" ></label></td>';
                 html=html+'<td data-url="'+route1+'" class="redirecttopage">'+val.id+'</td>';
                 html=html+'<td>'+val.author.firstName+' '+val.author.lastName+'</td>';
                 // html=html+'<td>'+val.status+'</td>'; 
@@ -260,6 +270,30 @@ error_reporting(E_ALL ^ E_NOTICE);
           });
           return html;      
 }
+$("#is_active").click(function () {
+        $("#orderTable .is_open").prop('checked', $(this).prop('checked'));
+
+    });
+
+    $("#deleteAll").click(function () {
+        if ($('#orderTable .is_open:checked').length) {
+            if (confirm('Are You Sure want to Delete Selected Data ?')) {
+                jQuery("#data-table_processing").show();
+                $('#orderTable .is_open:checked').each(function () {
+                    var dataId = $(this).attr('dataId');
+
+                    database.collection('restaurant_orders').doc(dataId).delete().then(function () {
+
+                        window.location.reload();
+                    });
+
+                });
+
+            }
+        } else {
+            alert('Please Select Any One Record .');
+        }
+    });
 
 function prev(){
     if(endarray.length==1){
@@ -427,7 +461,7 @@ function buildHTMLProductstotal(snapshotsProducts){
           
           if(intRegex.test(discount) || floatRegex.test(discount)) {
 
-            discount=parseFloat(discount).toFixed(2);
+            discount=parseFloat(discount).toFixed(decimal_degits);
             total_price -=parseFloat(discount);
 
             if(currencyAtRight){
@@ -463,7 +497,7 @@ function buildHTMLProductstotal(snapshotsProducts){
           
           if((intRegex.test(deliveryCharge) || floatRegex.test(deliveryCharge)) && !isNaN(deliveryCharge)) {
 
-                deliveryCharge=parseFloat(deliveryCharge).toFixed(2);
+                deliveryCharge=parseFloat(deliveryCharge).toFixed(decimal_degits);
                 total_price +=parseFloat(deliveryCharge);
                 
                 if(currencyAtRight){
@@ -476,9 +510,9 @@ function buildHTMLProductstotal(snapshotsProducts){
           
           if(intRegex.test(tip_amount) || floatRegex.test(tip_amount) && !isNaN(tip_amount)) {
 
-              tip_amount=parseFloat(tip_amount).toFixed(2);
+              tip_amount=parseFloat(tip_amount).toFixed(decimal_degits);
               total_price +=parseFloat(tip_amount);
-              total_price=parseFloat(total_price).toFixed(2);
+              total_price=parseFloat(total_price).toFixed(decimal_degits);
               
                 if(currencyAtRight){
                   tip_amount_val = tip_amount+""+currentCurrency;
@@ -487,10 +521,10 @@ function buildHTMLProductstotal(snapshotsProducts){
                 }
             }
 
-            if(currencyAtRight){
-            var  total_price_val = total_price+""+currentCurrency;
-            }else{
-              var total_price_val = currentCurrency+""+total_price;
+            if (currencyAtRight) {
+                var total_price_val = parseFloat(total_price).toFixed(decimal_degits) + "" + currentCurrency;
+            } else {
+                var total_price_val = currentCurrency + "" + parseFloat(total_price).toFixed(decimal_degits);
             }
 
 
@@ -499,10 +533,10 @@ return total_price_val;
 
 function disableClick(){
     var is_disable_delete = "<?php echo env('IS_DISABLE_DELETE'); ?>";
-    if(is_disable_delete == 1){
-        jQuery("a.do_not_delete").removeAttr("name");
-        jQuery("a.do_not_delete").attr("name","alert_demo");       
-    }
+    // if(is_disable_delete == 1){
+    //     jQuery("a.do_not_delete").removeAttr("name");
+    //     jQuery("a.do_not_delete").attr("name","alert_demo");       
+    // }
 }
 
 

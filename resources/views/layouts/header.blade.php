@@ -75,10 +75,8 @@
                             <!-- <div class="u-img"><img src="{{ asset('/images/users/flag.png') }}" alt="user"></div> -->
                             <div class="u-img"><img src="{{ asset('/images/users/user-2.png') }}" alt="user" style="max-width: 45px;"></div>
                             <div class="u-text">
-                                <h4>Administrateur</h4>
-                                <p class="text-muted">Super Administrator</p>
-                                    <!-- <a href="change-password.php" class="btn btn-rounded btn-danger btn-sm">Password</a> -->
-                                </div>
+                                <h4 id="username"></h4>
+                            </div>
                         </div>
                     </li>
                     <li role="separator" class="divider"></li>
